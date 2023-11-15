@@ -4,17 +4,13 @@
   align-items: center;
   height: 100vh; /* Full viewport height */
   background-color: #f0f0f0; /* Optional: background color of the app */
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .game-canvas-container { 
   align-items: center;
-  border: 1px solid black; /* Thin black border */
   box-sizing: border-box; /* Ensures border is included in the width/height */
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {

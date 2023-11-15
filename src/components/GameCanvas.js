@@ -15,11 +15,6 @@ const GameCanvas = () => {
 
         pixiContainer.current.appendChild(app.view);
 
-        //now we set teh background image of the canvas (stage 1)
-        
-     
-    
-
         // Your Pixi.js game logic goes here
         // Example: Adding a simple sprite
         // let sprite = PIXI.Sprite.from("path_to_your_sprite_image.png");
@@ -29,26 +24,51 @@ const GameCanvas = () => {
         background.anchor.set(0, 0); // Anchor top-left
         background.x = 0; // Position at left edge
         background.y = 0; // Position at top edge
+
         background.width = 1024; // Width of the canvas
         background.height = 1024; // Height of the canvas
         app.stage.addChild(background);
-        
-        // Add the sprite to the stage
-        app.stage.addChild(background);
 
-        let sprite = PIXI.Sprite.from('https://pixijs.io/examples/examples/assets/bunny.png');
-        sprite.anchor.set(0.5);
-        sprite.x = app.screen.width / 2;
-        sprite.y = app.screen.height / 2;
+        let downSprite = PIXI.Sprite.from('downsprite.png');
+        let upSprite = PIXI.Sprite.from('upsprite.png');
+        let leftSprite = PIXI.Sprite.from('leftsprite.png');
+        let rightSprite = PIXI.Sprite.from('rightsprite.png');
+
+        let currentSprite = downSprite;
+        app.stage.addChild(currentSprite);
+
+        downSprite.anchor.set(0.5);
+        downSprite.x = app.screen.width / 2;
+        downSprite.y = app.screen.height / 2;
 
         let whiteboard = PIXI.Sprite.from('whiteboard.png');
         whiteboard.x = app.screen.width / 3; // Adjust as needed
         whiteboard.y = app.screen.height / 3;
-        whiteboard.width = 52; // Set the width of the whiteboard
+        whiteboard.width = 42; // Set the width of the whiteboard
         whiteboard.height = 42; // Set the height of the whiteboard
         app.stage.addChild(whiteboard);
 
-        app.stage.addChild(sprite);      // Add the sprite last
+        app.stage.addChild(downSprite); // (load orders matter in pixi.js)
+
+        function changeSprite(newSprite) {
+            if (currentSprite !== newSprite) {
+                // Store the current position
+                const currentX = currentSprite.x;
+                const currentY = currentSprite.y;
+        
+                app.stage.removeChild(currentSprite);
+                currentSprite = newSprite;
+                currentSprite.anchor.set(0.5);
+        
+                // Set the new sprite's position to the stored position
+                currentSprite.x = currentX;
+                currentSprite.y = currentY;
+        
+                app.stage.addChild(currentSprite);
+            }
+        }
+        
+
 
         const speed = 5;
 
@@ -60,30 +80,30 @@ const GameCanvas = () => {
         }
 
         function moveLeft() {
-            sprite.x -= speed;
-            if (spriteCollision(sprite, whiteboard)) {
-                sprite.x += speed; // stop sprite movement
+            currentSprite.x -= speed;
+            if (spriteCollision(currentSprite, whiteboard)) {
+                currentSprite.x += speed; // stop sprite movement
             }
         }
         
         function moveRight() {
-            sprite.x += speed;
-            if (spriteCollision(sprite, whiteboard)) {
-                sprite.x -= speed;
+            currentSprite.x += speed;
+            if (spriteCollision(currentSprite, whiteboard)) {
+                currentSprite.x -= speed;
             }
         }
         
         function moveUp() {
-            sprite.y -= speed;
-            if (spriteCollision(sprite, whiteboard)) {
-                sprite.y += speed;
+            currentSprite.y -= speed;
+            if (spriteCollision(currentSprite, whiteboard)) {
+                currentSprite.y += speed;
             }
         }
         
         function moveDown() {
-            sprite.y += speed;
-            if (spriteCollision(sprite, whiteboard)) {
-                sprite.y -= speed;
+            currentSprite.y += speed;
+            if (spriteCollision(currentSprite, whiteboard)) {
+                currentSprite.y -= speed;
             }
         }
 
@@ -91,15 +111,19 @@ const GameCanvas = () => {
             switch(e.code) {
                 case 'ArrowLeft':
                     moveLeft();
+                    changeSprite(leftSprite);
                     break;
                 case 'ArrowRight':
                     moveRight();
+                    changeSprite(rightSprite);
                     break;
                 case 'ArrowUp':
                     moveUp();
+                    changeSprite(upSprite);
                     break;
                 case 'ArrowDown':
                     moveDown();
+                    changeSprite(downSprite);
                     break;
                 
                 case 'Space':
@@ -117,8 +141,8 @@ const GameCanvas = () => {
 
         function isNearWhiteboard() {
             const proximity = 50; // Adjust this value as needed
-            const dx = sprite.x - (whiteboard.x + whiteboard.width / 2);
-            const dy = sprite.y - (whiteboard.y + whiteboard.height / 2);
+            const dx = downSprite.x - (whiteboard.x + whiteboard.width / 2);
+            const dy = downSprite.y - (whiteboard.y + whiteboard.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
         
             return distance < proximity;
@@ -162,7 +186,7 @@ const GameCanvas = () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
             });
-        
+
             app.stage.addChild(modal);
         }
 
