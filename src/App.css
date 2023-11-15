@@ -1,5 +1,15 @@
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f0f0f0; /* Optional: background color of the app */
+}
+
+.game-canvas-container { 
+  align-items: center;
+  border: 1px solid black; /* Thin black border */
+  box-sizing: border-box; /* Ensures border is included in the width/height */
 }
 
 .App-logo {
@@ -35,4 +45,35 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* Ensure it's above other elements */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dialog {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
 }
