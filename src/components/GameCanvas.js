@@ -185,6 +185,7 @@ const GameCanvas = () => {
             try {
                 const response = await fetch('/api/goals');
                 const goals = await response.json();
+                console.log(goals);
                 let goalsText = 'Goals:\n';
                 goals.forEach(goal => {
                     goalsText += `${goal.goal} - ${goal.days} days - Completed: ${goal.completed}\n`;
