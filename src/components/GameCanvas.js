@@ -168,7 +168,7 @@ const GameCanvas = () => {
             modalBg.drawRoundedRect(0, 0, 600, 600, 16) // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
-        
+
             // add the modal text
             let textStyle = new PIXI.TextStyle({
                 fontFamily: 'Arial',
@@ -177,7 +177,7 @@ const GameCanvas = () => {
                 wordWrap: true,
                 wordWrapWidth: 600, 
             });
-        
+
             let modalText = new PIXI.Text('Loading goals...', textStyle);
             modalText.x = 20;
             modalText.y = 20;
@@ -189,10 +189,10 @@ const GameCanvas = () => {
                     const goals = await response.json();
             
                     let goalsText = goals.map(goal => 
-                        `${goal.goals} - ${goal.days} days - Completed: ${goal.complete ? 'Yes' : 'No'}`
+                        `${goal.goals} - Completed: ${goal.complete ? 'Yes' : 'No'}`
                     ).join('\n');
             
-                    modalText.text = `Goals:\n${goalsText}`;
+                    modalText.text = `VIEWING ALL GOALS\n${goalsText}`;
                 } catch (error) {
                     console.error('Error:', error);
                     modalText.text = 'Failed to load goals.';
