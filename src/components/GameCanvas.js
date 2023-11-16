@@ -133,7 +133,9 @@ const GameCanvas = () => {
                     break;
                 
                 case 'Space':
-                    if (isNearWhiteboard()) {
+                    if (isNearNotepad()) {
+                        createModal();
+                    } else if (isNearUsers()) {
                         createModal();
                     }
                     break;
@@ -145,7 +147,7 @@ const GameCanvas = () => {
 
         window.addEventListener('keydown', onKeyDown);
 
-        function isNearWhiteboard() {
+        function isNearNotepad() {
             const proximity = 70; // (check console.log distance to view proximity to whiteboard)
             const dx = currentSprite.x - (notepad.x + notepad.width / 2);
             const dy = currentSprite.y - (notepad.y + notepad.height / 2);
@@ -199,6 +201,7 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
         
+            //LOAD GOALS MODAL
             async function loadGoals() {
                 try {
                     const response = await fetch('/api/goals');
@@ -216,6 +219,24 @@ const GameCanvas = () => {
             }
 
             loadGoals();
+
+            async function loadUsers() {
+                try {
+                    const response = await fetch('/api/users');
+                    const users = await response.json();
+            
+                    let usersText = users.map(user => 
+                        `ID: ${user.PRIMARY_KEY}, Name: ${user.Firstname} ${user.Lastname}, Stage: ${user.Stage}`
+                    ).join('\n');
+
+                    modalText.text = `Viewing All Users! (click to close)\n${usersText}`;
+                } catch (error) {
+                    console.error('Error:', error);
+                    modalText.text = 'Internal Network Error: Failed to Load Users';
+                }
+            }
+            
+            loadUsers();
 
             // add a close button (*made it clickable)
             modal.interactive = true;
