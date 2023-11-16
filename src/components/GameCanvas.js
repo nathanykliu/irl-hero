@@ -193,6 +193,7 @@ const GameCanvas = () => {
                 modalText.text = goalsText;
             } catch (error) {
                 console.error('Error:', error);
+                console.log(error.message)
                 modalText.text = 'Failed to load goals.';
             }
         
