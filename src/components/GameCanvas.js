@@ -235,7 +235,7 @@ const GameCanvas = () => {
                 currentSprite.y += speed;
             }
         }
-        
+
         function moveDown() {
             currentSprite.y += speed;
             if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
