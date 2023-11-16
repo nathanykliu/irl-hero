@@ -15,7 +15,6 @@ const GameCanvas = () => {
 
         pixiContainer.current.appendChild(app.view);
 
-
         //background
         let background = PIXI.Sprite.from('stage1background.png');
         background.anchor.set(0, 0);
@@ -47,8 +46,8 @@ const GameCanvas = () => {
 
         //change user computer sprite
         let changeUser = PIXI.Sprite.from('users.png');
-        changeUser.x = app.screen.width / 2;
-        changeUser.y = app.screen.height / 2;
+        changeUser.x = app.screen.width / 1.9;
+        changeUser.y = app.screen.height / 1.5;
         app.stage.addChild(changeUser);
 
 
@@ -219,24 +218,6 @@ const GameCanvas = () => {
             }
 
             loadGoals();
-
-            async function loadUsers() {
-                try {
-                    const response = await fetch('/api/users');
-                    const users = await response.json();
-            
-                    let usersText = users.map(user => 
-                        `ID: ${user.PRIMARY_KEY}, Name: ${user.Firstname} ${user.Lastname}, Stage: ${user.Stage}`
-                    ).join('\n');
-
-                    modalText.text = `Viewing All Users! (click to close)\n${usersText}`;
-                } catch (error) {
-                    console.error('Error:', error);
-                    modalText.text = 'Internal Network Error: Failed to Load Users';
-                }
-            }
-            
-            loadUsers();
 
             // add a close button (*made it clickable)
             modal.interactive = true;
