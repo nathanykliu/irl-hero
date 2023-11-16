@@ -67,8 +67,6 @@ const GameCanvas = () => {
                 app.stage.addChild(currentSprite);
             }
         }
-        
-
 
         const speed = 8;
 
