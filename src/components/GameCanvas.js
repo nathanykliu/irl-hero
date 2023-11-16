@@ -183,7 +183,7 @@ const GameCanvas = () => {
             modal.addChild(modalText);
         
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}api/goals`);
+                const response = await fetch(`https://irl-hero.vercel.app/api/goals`);
                 const goals = await response.json();
                 let goalsText = 'Goals:\n';
                 goals.forEach(goal => {
