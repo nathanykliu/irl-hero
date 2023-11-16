@@ -2,15 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
-  background-color: #f0f0f0; /* Optional: background color of the app */
-  overflow-y: hidden;
+  height: 100vh;
+  background-color: #f0f0f0; 
   overflow-x: hidden;
 }
 
 .game-canvas-container { 
   align-items: center;
-  box-sizing: border-box; /* Ensures border is included in the width/height */
+  box-sizing: border-box;
 }
 
 @media (prefers-reduced-motion: no-preference) {

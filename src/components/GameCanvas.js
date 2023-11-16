@@ -199,39 +199,46 @@ const GameCanvas = () => {
             }
         }
 
-        const speed = 8;
+        const speed = 5;
 
-        function spriteCollision(a, b) {
-            return a.x - a.width / 2 < b.x + b.width / 2 &&
-                   a.x + a.width / 2 > b.x - b.width / 2 &&
-                   a.y - a.height / 2 < b.y + b.height / 2 &&
-                   a.y + a.height / 2 > b.y - b.height / 2;
+        //collision logic
+        function spriteCollision(a, b, collisionMargin) {
+            // Reduce the effective size of each sprite's collision area by the margin
+            let aEffectiveWidth = a.width - collisionMargin;
+            let aEffectiveHeight = a.height - collisionMargin;
+            let bEffectiveWidth = b.width - collisionMargin;
+            let bEffectiveHeight = b.height - collisionMargin;
+        
+            return a.x - aEffectiveWidth / 2 < b.x + bEffectiveWidth / 2 &&
+                   a.x + aEffectiveWidth / 2 > b.x - bEffectiveWidth / 2 &&
+                   a.y - aEffectiveHeight / 2 < b.y + bEffectiveHeight / 2 &&
+                   a.y + aEffectiveHeight / 2 > b.y - bEffectiveHeight / 2;
         }
 
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
+            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
 
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
+            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
                 currentSprite.x -= speed;
             }
         }
         
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
+            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
                 currentSprite.y += speed;
             }
         }
         
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
+            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
                 currentSprite.y -= speed;
             }
         }
