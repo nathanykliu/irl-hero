@@ -39,13 +39,13 @@ const GameCanvas = () => {
         downSprite.x = app.screen.width / 2;
         downSprite.y = app.screen.height / 2;
 
-        //whiteboard/notepad creation
-        let whiteboard = PIXI.Sprite.from('whiteboard.png');
-        whiteboard.x = app.screen.width / 3;
-        whiteboard.y = app.screen.height / 3;
-        app.stage.addChild(whiteboard);
+        //notepad creation
+        let notepad = PIXI.Sprite.from('notepad.png');
+        notepad.x = app.screen.width / 3;
+        notepad.y = app.screen.height / 3;
+        app.stage.addChild(notepad);
 
-        //change user sprite
+        //change user computer sprite
         let changeUser = PIXI.Sprite.from('users.png');
         changeUser.x = app.screen.width / 2;
         changeUser.y = app.screen.height / 2;
@@ -83,28 +83,28 @@ const GameCanvas = () => {
 
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, whiteboard)) {
+            if (spriteCollision(currentSprite, notepad)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
         
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, whiteboard)) {
+            if (spriteCollision(currentSprite, notepad)) {
                 currentSprite.x -= speed;
             }
         }
         
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, whiteboard)) {
+            if (spriteCollision(currentSprite, notepad)) {
                 currentSprite.y += speed;
             }
         }
         
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, whiteboard)) {
+            if (spriteCollision(currentSprite, notepad)) {
                 currentSprite.y -= speed;
             }
         }
@@ -147,8 +147,8 @@ const GameCanvas = () => {
 
         function isNearWhiteboard() {
             const proximity = 70; // (check console.log distance to view proximity to whiteboard)
-            const dx = currentSprite.x - (whiteboard.x + whiteboard.width / 2);
-            const dy = currentSprite.y - (whiteboard.y + whiteboard.height / 2);
+            const dx = currentSprite.x - (notepad.x + notepad.width / 2);
+            const dy = currentSprite.y - (notepad.y + notepad.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Notebook:" + distance);
 
