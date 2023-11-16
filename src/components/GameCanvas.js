@@ -1,4 +1,4 @@
-import React, { useRef, useEffect} from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as PIXI from 'pixi.js';
 
 const GameCanvas = () => {
@@ -168,8 +168,8 @@ const GameCanvas = () => {
 
         //notepad creation
         let notepad = PIXI.Sprite.from('notepad.png');
-        notepad.x = app.screen.width / 3;
-        notepad.y = app.screen.height / 3;
+        notepad.x = app.screen.width / 2.25;
+        notepad.y = app.screen.height / 3.5;
         app.stage.addChild(notepad);
 
         //change user computer sprite
@@ -332,6 +332,7 @@ const GameCanvas = () => {
         }
 
         async function createGoalsModal() {
+
             // create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
@@ -393,6 +394,7 @@ const GameCanvas = () => {
             });
         
             app.stage.addChild(modal);
+
         }
 
         async function createUsersModal() {
