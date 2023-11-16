@@ -183,7 +183,7 @@ const GameCanvas = () => {
             modal.addChild(modalText);
         
             try {
-                const response = await fetch(`${process.env.POSTGRES_URL}`);
+                const response = await fetch('/api/goals');
                 const goals = await response.json();
                 let goalsText = 'Goals:\n';
                 goals.forEach(goal => {
