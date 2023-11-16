@@ -82,31 +82,32 @@ const GameCanvas = () => {
 
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, notepad)) {
+            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
         
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, notepad)) {
+            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
                 currentSprite.x -= speed;
             }
         }
         
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, notepad)) {
+            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
                 currentSprite.y += speed;
             }
         }
         
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, notepad)) {
+            if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
                 currentSprite.y -= speed;
             }
         }
+        
 
         function onKeyDown(e) {
             switch(e.code) {
