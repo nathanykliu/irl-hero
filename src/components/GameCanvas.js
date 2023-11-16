@@ -88,6 +88,70 @@ const GameCanvas = () => {
 
         }
 
+        //animation up
+        let img3 = new Image();
+        img3.src = "newspritesheet.png";
+
+        img3.onload = () => {
+            createUpAnimation(img3);
+        };
+
+        let animatedSpriteUp;
+
+        function createUpAnimation(image) {
+            let baseTexture = new PIXI.BaseTexture(image);
+            let frames = [];
+
+            const frameWidth = 78; // Width of each frame
+            const frameHeight = 70; // Height of each frame
+            const numberOfFrames = 3; // Total number of frames in the sprite sheet
+
+            for (let i = 0; i < numberOfFrames; i++) {
+                let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 214, frameWidth, frameHeight));
+                frames.push(frame);
+            }
+
+            animatedSpriteUp = new PIXI.AnimatedSprite(frames);
+            animatedSpriteUp.animationSpeed = 0.1;
+            animatedSpriteUp.play();
+
+            animatedSpriteUp.visible = false; 
+            app.stage.addChild(animatedSpriteUp);
+
+        }
+        
+        //animation down
+        let img4 = new Image();
+        img4.src = "newspritesheet.png";
+
+        img4.onload = () => {
+            createDownAnimation(img4);
+        };
+
+        let animatedSpriteDown;
+
+        function createDownAnimation(image) {
+            let baseTexture = new PIXI.BaseTexture(image);
+            let frames = [];
+
+            const frameWidth = 78; // Width of each frame
+            const frameHeight = 85; // Height of each frame
+            const numberOfFrames = 3; // Total number of frames in the sprite sheet
+
+            for (let i = 0; i < numberOfFrames; i++) {
+                let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 130, frameWidth, frameHeight));
+                frames.push(frame);
+            }
+
+            animatedSpriteDown = new PIXI.AnimatedSprite(frames);
+            animatedSpriteDown.animationSpeed = 0.1;
+            animatedSpriteDown.play();
+
+            animatedSpriteDown.visible = false; 
+            app.stage.addChild(animatedSpriteDown);
+
+        }
+
         //static sprites (no idle animation)
         let downSprite = PIXI.Sprite.from('downsprite.png');
         let upSprite = PIXI.Sprite.from('upsprite.png');
@@ -196,14 +260,20 @@ const GameCanvas = () => {
         
                 case 'ArrowUp':
                     moveUp();
-                    changeSprite(upSprite);
-                    currentSprite = upSprite;
+                    if (animatedSpriteUp) {
+                        changeSprite(animatedSpriteUp);
+                    } else {
+                        changeSprite(upSprite);
+                    }
                     break;
 
                 case 'ArrowDown':
                     moveDown();
-                    changeSprite(downSprite);
-                    currentSprite = downSprite;
+                    if (animatedSpriteDown) {
+                        changeSprite(animatedSpriteDown);
+                    } else {
+                        changeSprite(downSprite);
+                    }
                     break;
 
                 case 'Space':
