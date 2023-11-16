@@ -144,10 +144,11 @@ const GameCanvas = () => {
         window.addEventListener('keydown', onKeyDown);
 
         function isNearWhiteboard() {
-            const proximity = 10; // Adjust this value as needed
+            const proximity = 70; // Adjust this value as needed
             const dx = currentSprite.x - (whiteboard.x + whiteboard.width / 2);
             const dy = currentSprite.y - (whiteboard.y + whiteboard.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Notebook:" + distance);
         
             return distance < proximity;
         }
@@ -177,8 +178,11 @@ const GameCanvas = () => {
                 fontFamily: 'Arial',
                 fontSize: 24,
                 fill: '#000000',
+                wordWrap: true,
+                wordWrapWidth: 350, // Adjust as needed
             });
-            let modalText = new PIXI.Text('Goals\n\n[Add your content here]', textStyle);
+
+            let modalText = new PIXI.Text('Goals\n\n[Add your content here. Click on this window to close it.]', textStyle);
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
