@@ -144,7 +144,7 @@ const GameCanvas = () => {
             const dy = currentSprite.y - (whiteboard.y + whiteboard.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Notebook:" + distance);
-        
+
             return distance < proximity;
         }
 
@@ -164,7 +164,7 @@ const GameCanvas = () => {
             // Add a background for the modal
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // White background
-            modalBg.drawRoundedRect(0, 0, 800, 600, 16)
+            modalBg.drawRoundedRect(0, 0, 600, 600, 16)
             modalBg.endFill();
             modal.addChild(modalBg);
         
@@ -174,7 +174,7 @@ const GameCanvas = () => {
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
-                wordWrapWidth: 500, // Adjust as needed
+                wordWrapWidth: 500, 
             });
         
             let modalText = new PIXI.Text('Loading goals...', textStyle);
