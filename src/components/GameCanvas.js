@@ -348,7 +348,7 @@ const GameCanvas = () => {
             // add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 600, 600, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
         
@@ -413,7 +413,7 @@ const GameCanvas = () => {
             // add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 600, 600, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
         
@@ -431,7 +431,7 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
         
-            // async load users
+            // async load
             await loadUsers(modalText);
         
             // click to close
