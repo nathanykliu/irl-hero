@@ -182,21 +182,24 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
         
-            try {
-                const response = await fetch('/api/goals');
-                const goals = await response.json();
-                console.log(goals);
-                let goalsText = 'Goals:\n';
-                goals.forEach(goal => {
-                    goalsText += `${goal.goal} - ${goal.days} days - Completed: ${goal.completed}\n`;
-                });
-        
-                modalText.text = goalsText;
-            } catch (error) {
-                console.error('Error:', error);
-                console.log(error.message)
-                modalText.text = 'Failed to load goals.';
+            async function loadGoals() {
+                try {
+                    const response = await fetch('/api/goals');
+                    const goals = await response.json();
+            
+                    let goalsText = goals.map(goal => 
+                        `${goal.goals} - ${goal.days} days - Completed: ${goal.complete ? 'Yes' : 'No'}`
+                    ).join('\n');
+            
+                    modalText.text = `Goals:\n${goalsText}`;
+                } catch (error) {
+                    console.error('Error:', error);
+                    modalText.text = 'Failed to load goals.';
+                }
             }
+            
+            loadGoals();
+            
         
             // Add a close button (or just make the whole modal clickable)
             modal.interactive = true;

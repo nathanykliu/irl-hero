@@ -19,7 +19,7 @@ const pool = new Pool({
 
 app.get('/api/goals', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM goals');
+    const { rows } = await pool.query('SELECT * FROM goals;');
     res.status(200).json(rows);
   } catch (err) {
     console.error(err);
