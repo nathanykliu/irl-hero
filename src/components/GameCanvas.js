@@ -34,6 +34,7 @@ const GameCanvas = () => {
         let leftSprite = PIXI.Sprite.from('leftsprite.png');
         let rightSprite = PIXI.Sprite.from('rightsprite.png');
 
+        //initial sprite movement (default to down)
         let currentSprite = downSprite;
         app.stage.addChild(currentSprite);
 
@@ -41,14 +42,20 @@ const GameCanvas = () => {
         downSprite.x = app.screen.width / 2;
         downSprite.y = app.screen.height / 2;
 
+        //whiteboard/notepad creation
         let whiteboard = PIXI.Sprite.from('whiteboard.png');
-        whiteboard.x = app.screen.width / 3; // Adjust as needed
+
+        //get size of whiteboard.png for collision detection
+
+        const whiteboardTexture = PIXI.Texture.from('whiteboard.png');
+        whiteboard.x = app.screen.width / 3;
         whiteboard.y = app.screen.height / 3;
-        whiteboard.width = 42; // Set the width of the whiteboard
-        whiteboard.height = 42; // Set the height of the whiteboard
+        whiteboard.width = whiteboardTexture.width;
+        whiteboard.height = whiteboardTexture.height;
+        
         app.stage.addChild(whiteboard);
 
-        app.stage.addChild(downSprite); // (load orders matter in pixi.js)
+        app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
         function changeSprite(newSprite) {
             if (currentSprite !== newSprite) {
@@ -112,18 +119,22 @@ const GameCanvas = () => {
                 case 'ArrowLeft':
                     moveLeft();
                     changeSprite(leftSprite);
+                    currentSprite = leftSprite;
                     break;
                 case 'ArrowRight':
                     moveRight();
                     changeSprite(rightSprite);
+                    currentSprite = rightSprite;
                     break;
                 case 'ArrowUp':
                     moveUp();
                     changeSprite(upSprite);
+                    currentSprite = upSprite;
                     break;
                 case 'ArrowDown':
                     moveDown();
                     changeSprite(downSprite);
+                    currentSprite = downSprite;
                     break;
                 
                 case 'Space':
@@ -140,9 +151,9 @@ const GameCanvas = () => {
         window.addEventListener('keydown', onKeyDown);
 
         function isNearWhiteboard() {
-            const proximity = 50; // Adjust this value as needed
-            const dx = downSprite.x - (whiteboard.x + whiteboard.width / 2);
-            const dy = downSprite.y - (whiteboard.y + whiteboard.height / 2);
+            const proximity = 10; // Adjust this value as needed
+            const dx = currentSprite.x - (whiteboard.x + whiteboard.width / 2);
+            const dy = currentSprite.y - (whiteboard.y + whiteboard.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
         
             return distance < proximity;
