@@ -15,26 +15,23 @@ const GameCanvas = () => {
 
         pixiContainer.current.appendChild(app.view);
 
-        // Your Pixi.js game logic goes here
-        // Example: Adding a simple sprite
-        // let sprite = PIXI.Sprite.from("path_to_your_sprite_image.png");
-        // app.stage.addChild(sprite);
 
+        //background
         let background = PIXI.Sprite.from('stage1background.png');
-        background.anchor.set(0, 0); // Anchor top-left
-        background.x = 0; // Position at left edge
-        background.y = 0; // Position at top edge
-
-        background.width = 1024; // Width of the canvas
-        background.height = 1024; // Height of the canvas
+        background.anchor.set(0, 0);
+        background.x = 0;
+        background.y = 0;
+        background.width = 1024;
+        background.height = 1024;
         app.stage.addChild(background);
 
+        //sprites
         let downSprite = PIXI.Sprite.from('downsprite.png');
         let upSprite = PIXI.Sprite.from('upsprite.png');
         let leftSprite = PIXI.Sprite.from('leftsprite.png');
         let rightSprite = PIXI.Sprite.from('rightsprite.png');
 
-        //initial sprite movement (default to down)
+        //initial sprite movement (start w/ downsprite)
         let currentSprite = downSprite;
         app.stage.addChild(currentSprite);
 
