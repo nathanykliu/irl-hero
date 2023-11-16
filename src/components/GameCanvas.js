@@ -40,7 +40,7 @@ const GameCanvas = () => {
 
             const frameWidth = 78; // width of each frame
             const frameHeight = 65; // height of each frame
-            const numberOfFrames = 5; // total number of frames in the sprite sheet
+            const numberOfFrames = 5; // # of frames to play
 
             for (let i = 0; i < numberOfFrames; i++) {
                 let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 0, frameWidth, frameHeight));
@@ -70,9 +70,9 @@ const GameCanvas = () => {
             let baseTexture = new PIXI.BaseTexture(image);
             let frames = [];
 
-            const frameWidth = 78; // Width of each frame
-            const frameHeight = 65; // Height of each frame
-            const numberOfFrames = 5; // Total number of frames in the sprite sheet
+            const frameWidth = 78; 
+            const frameHeight = 65;
+            const numberOfFrames = 5;
 
             for (let i = 0; i < numberOfFrames; i++) {
                 let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 65, frameWidth, frameHeight));
@@ -102,9 +102,9 @@ const GameCanvas = () => {
             let baseTexture = new PIXI.BaseTexture(image);
             let frames = [];
 
-            const frameWidth = 78; // Width of each frame
-            const frameHeight = 70; // Height of each frame
-            const numberOfFrames = 3; // Total number of frames in the sprite sheet
+            const frameWidth = 78;
+            const frameHeight = 70;
+            const numberOfFrames = 3;
 
             for (let i = 0; i < numberOfFrames; i++) {
                 let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 214, frameWidth, frameHeight));
@@ -134,9 +134,9 @@ const GameCanvas = () => {
             let baseTexture = new PIXI.BaseTexture(image);
             let frames = [];
 
-            const frameWidth = 78; // Width of each frame
-            const frameHeight = 85; // Height of each frame
-            const numberOfFrames = 3; // Total number of frames in the sprite sheet
+            const frameWidth = 78;
+            const frameHeight = 85;
+            const numberOfFrames = 3;
 
             for (let i = 0; i < numberOfFrames; i++) {
                 let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 130, frameWidth, frameHeight));
@@ -190,7 +190,7 @@ const GameCanvas = () => {
                 currentSprite = newSprite;
                 currentSprite.anchor.set(0.0);
         
-                // Set the new sprite's position to the stored position
+                // setting new sprite position to stored position
                 currentSprite.visible = true;
                 currentSprite.x = currentX;
                 currentSprite.y = currentY;
@@ -279,7 +279,7 @@ const GameCanvas = () => {
                 case 'Space':
                     if (isNearNotepad()) {
                         createGoalsModal();
-                    } else if (isNearUsers()) {
+                    } else if (isNearComputer()) {
                         createUsersModal();
                     }
                     break;
@@ -321,8 +321,8 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
-        function isNearUsers() {
-            const proximity = 70; // (check console.log distance to view proximity to whiteboard)
+        function isNearComputer() {
+            const proximity = 70; // (check console.log distance to view proximity to computer)
             const dx = currentSprite.x - (changeUser.x + changeUser.width / 2);
             const dy = currentSprite.y - (changeUser.y + changeUser.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -385,7 +385,7 @@ const GameCanvas = () => {
                 }
             }
         
-            // Add a close button (*made it clickable)
+            // click to close
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
@@ -431,10 +431,10 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
         
-            // Load Users
+            // async load users
             await loadUsers(modalText);
         
-            // Add a close button (*made it clickable)
+            // click to close
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
