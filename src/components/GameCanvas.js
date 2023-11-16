@@ -282,6 +282,7 @@ const GameCanvas = () => {
             try {
                 const response = await fetch('/api/users');
                 const users = await response.json();
+                console.log(users)
         
                 let usersText = users.map(user => 
                     `ID: ${user.PRIMARY_KEY}, Name: ${user.Firstname} ${user.Lastname}, Stage: ${user.Stage}`
