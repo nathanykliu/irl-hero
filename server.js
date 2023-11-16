@@ -3,11 +3,6 @@ const { Pool } = require('pg');
 const app = express();
 const cors = require('cors');
 
-
-app.use(cors({
-    origin: "https://irl-hero.vercel.app/" // Replace with your frontend's domain
-}));
-
 app.use(express.json());
 app.use(express.static('public'));
 const PORT = process.env.PORT || 9001;
