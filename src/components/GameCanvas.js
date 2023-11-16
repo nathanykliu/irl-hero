@@ -70,7 +70,7 @@ const GameCanvas = () => {
         
 
 
-        const speed = 5;
+        const speed = 8;
 
         function spriteCollision(a, b) {
             return a.x - a.width / 2 < b.x + b.width / 2 &&
@@ -212,5 +212,7 @@ const GameCanvas = () => {
 
     
 };
+
+
 
 export default GameCanvas;
