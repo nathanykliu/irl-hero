@@ -26,14 +26,4 @@ app.get('/api/goals', async (req, res) => {
   }
 });
 
-app.get('/api/users', async (req, res) => {
-  try {
-    const { rows } = await pool.query('SELECT * FROM users;');
-    res.status(200).json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
-});
-
 module.exports = app;
