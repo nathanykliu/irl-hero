@@ -6,7 +6,7 @@ const GameCanvas = () => {
 
     useEffect(() => {
 
-        // On component mount, create a Pixi.js app and append the canvas to the div
+        // on mount, create a Pixi.js app and append the canvas to the div
         let app = new PIXI.Application({
             width: 1024,
             height: 1024,
@@ -140,7 +140,7 @@ const GameCanvas = () => {
         window.addEventListener('keydown', onKeyDown);
 
         function isNearWhiteboard() {
-            const proximity = 70; // Adjust this value as needed
+            const proximity = 70; // (check console.log distance to view proximity to whiteboard)
             const dx = currentSprite.x - (whiteboard.x + whiteboard.width / 2);
             const dy = currentSprite.y - (whiteboard.y + whiteboard.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -150,26 +150,26 @@ const GameCanvas = () => {
         }
 
         async function createModal() {
-            // Create a semi-transparent background
+            // create teh background
             let bg = new PIXI.Graphics();
-            bg.beginFill(0x000000, 0.5); // Black with 50% opacity
+            bg.beginFill(0x000000, 0.5);
             bg.drawRect(0, 0, app.screen.width, app.screen.height);
             bg.endFill();
             app.stage.addChild(bg);
         
-            // Create a container for the modal
+            // create a modal container
             let modal = new PIXI.Container();
             modal.x = app.screen.width / 4;
             modal.y = app.screen.height / 4;
         
-            // Add a background for the modal
+            // add the modal bg
             let modalBg = new PIXI.Graphics();
-            modalBg.beginFill(0xFFFFFF); // White background
-            modalBg.drawRoundedRect(0, 0, 600, 600, 16)
+            modalBg.beginFill(0xFFFFFF); // white bg
+            modalBg.drawRoundedRect(0, 0, 600, 600, 16) // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
         
-            // Add text to the modal
+            // add the modal text
             let textStyle = new PIXI.TextStyle({
                 fontFamily: 'Arial',
                 fontSize: 24,
@@ -201,8 +201,7 @@ const GameCanvas = () => {
             
             loadGoals();
             
-        
-            // Add a close button (or just make the whole modal clickable)
+            // add a close button (make modal clickable)
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
@@ -225,7 +224,5 @@ const GameCanvas = () => {
         </div>
     );
 };
-
-
 
 export default GameCanvas;
