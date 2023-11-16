@@ -185,7 +185,7 @@ const GameCanvas = () => {
             let modalText = new PIXI.Text('Goals\n\n[Add your content here. Click on this window to close it.]', textStyle);
             modalText.x = 20;
             modalText.y = 20;
-            modal.addChild(modalText);
+            modal.addChild(modalText); 
         
             // Add a close button (or just make the whole modal clickable)
             modal.interactive = true;
