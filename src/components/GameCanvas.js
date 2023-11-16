@@ -285,8 +285,9 @@ const GameCanvas = () => {
                 console.log(users)
         
                 let usersText = users.map(user => 
-                    `ID: ${user.PRIMARY_KEY}, Name: ${user.Firstname} ${user.Lastname}, Stage: ${user.Stage}`
+                    `ID: ${user.id}, Name: ${user.firstname} ${user.lastname}, Stage: ${user.stage}`
                 ).join('\n');
+                
         
                 modalText.text = `Viewing All Users! (click to close)\n${usersText}`;
             } catch (error) {
