@@ -49,7 +49,8 @@ const GameCanvas = () => {
 
         function changeSprite(newSprite) {
             if (currentSprite !== newSprite) {
-                // Store the current position
+
+                //storing the current sprite position
                 const currentX = currentSprite.x;
                 const currentY = currentSprite.y;
         
