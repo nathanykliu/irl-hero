@@ -198,10 +198,10 @@ const GameCanvas = () => {
                     modalText.text = 'Failed to load goals.';
                 }
             }
-            
+
             loadGoals();
-            
-            // add a close button (make modal clickable)
+
+            // add a close button (*made it clickable)
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
