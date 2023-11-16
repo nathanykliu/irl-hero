@@ -133,9 +133,9 @@ const GameCanvas = () => {
                 
                 case 'Space':
                     if (isNearNotepad()) {
-                        createModal();
+                        createGoalsModal();
                     } else if (isNearUsers()) {
-                        createModal();
+                        createUsersModal();
                     }
                     break;
 
@@ -166,8 +166,8 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
-        async function createModal() {
-            // create teh background
+        async function createGoalsModal() {
+            // create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
             bg.drawRect(0, 0, app.screen.width, app.screen.height);
@@ -178,30 +178,32 @@ const GameCanvas = () => {
             let modal = new PIXI.Container();
             modal.x = app.screen.width / 4;
             modal.y = app.screen.height / 4;
-
+        
             // add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 600, 600, 16) // might be too big
+            modalBg.drawRoundedRect(0, 0, 600, 600, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
-
+        
             // add the modal text
             let textStyle = new PIXI.TextStyle({
                 fontFamily: 'Arial',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
-                wordWrapWidth: 600, 
+                wordWrapWidth: 600,
             });
-
+        
             let modalText = new PIXI.Text('Loading goals...', textStyle);
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
         
-            //LOAD GOALS MODAL
-            async function loadGoals() {
+            // Load Goals
+            await loadGoals(modalText);
+
+            async function loadGoals(modalText) {
                 try {
                     const response = await fetch('/api/goals');
                     const goals = await response.json();
@@ -216,10 +218,8 @@ const GameCanvas = () => {
                     modalText.text = 'Internal Network Error: Failed to Load Goals';
                 }
             }
-
-            loadGoals();
-
-            // add a close button (*made it clickable)
+        
+            // Add a close button (*made it clickable)
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
@@ -228,6 +228,70 @@ const GameCanvas = () => {
             });
         
             app.stage.addChild(modal);
+        }
+
+        async function createUsersModal() {
+            // create the background
+            let bg = new PIXI.Graphics();
+            bg.beginFill(0x000000, 0.5);
+            bg.drawRect(0, 0, app.screen.width, app.screen.height);
+            bg.endFill();
+            app.stage.addChild(bg);
+        
+            // create a modal container
+            let modal = new PIXI.Container();
+            modal.x = app.screen.width / 4;
+            modal.y = app.screen.height / 4;
+        
+            // add the modal bg
+            let modalBg = new PIXI.Graphics();
+            modalBg.beginFill(0xFFFFFF); // white bg
+            modalBg.drawRoundedRect(0, 0, 600, 600, 16); // might be too big
+            modalBg.endFill();
+            modal.addChild(modalBg);
+        
+            // add the modal text
+            let textStyle = new PIXI.TextStyle({
+                fontFamily: 'Arial',
+                fontSize: 24,
+                fill: '#000000',
+                wordWrap: true,
+                wordWrapWidth: 600,
+            });
+        
+            let modalText = new PIXI.Text('Loading users...', textStyle);
+            modalText.x = 20;
+            modalText.y = 20;
+            modal.addChild(modalText);
+        
+            // Load Users
+            await loadUsers(modalText);
+        
+            // Add a close button (*made it clickable)
+            modal.interactive = true;
+            modal.buttonMode = true;
+            modal.on('pointerdown', () => {
+                app.stage.removeChild(bg);
+                app.stage.removeChild(modal);
+            });
+        
+            app.stage.addChild(modal);
+        }
+        
+        async function loadUsers(modalText) {
+            try {
+                const response = await fetch('/api/users');
+                const users = await response.json();
+        
+                let usersText = users.map(user => 
+                    `ID: ${user.PRIMARY_KEY}, Name: ${user.Firstname} ${user.Lastname}, Stage: ${user.Stage}`
+                ).join('\n');
+        
+                modalText.text = `Viewing All Users! (click to close)\n${usersText}`;
+            } catch (error) {
+                console.error('Error:', error);
+                modalText.text = 'Internal Network Error: Failed to Load Users';
+            }
         }
 
         return () => {
