@@ -4,17 +4,20 @@ const app = express();
 const cors = require('cors');
 
 
-app.use(cors());
+app.use(cors({
+    origin: "https://irl-hero.vercel.app/" // Replace with your frontend's domain
+}));
+
 app.use(express.json());
 app.use(express.static('public'));
 const PORT = process.env.PORT || 9001;
 
 const pool = new Pool({ 
-    user: 'postgres',
-    host: 'localhost',
-    database: 'goals',
-    password: 'noob',
-    port: 5432
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT
 });
 
 // get all goals

@@ -148,7 +148,7 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
-        function createModal() {
+        async function createModal() {
             // Create a semi-transparent background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5); // Black with 50% opacity
@@ -176,11 +176,25 @@ const GameCanvas = () => {
                 wordWrap: true,
                 wordWrapWidth: 350, // Adjust as needed
             });
-
-            let modalText = new PIXI.Text('Goals\n\n[Add your content here. Click on this window to close it.]', textStyle);
+        
+            let modalText = new PIXI.Text('Loading goals...', textStyle);
             modalText.x = 20;
             modalText.y = 20;
-            modal.addChild(modalText); 
+            modal.addChild(modalText);
+        
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals`);
+                const goals = await response.json();
+                let goalsText = 'Goals:\n';
+                goals.forEach(goal => {
+                    goalsText += `${goal.goal} - ${goal.days} days - Completed: ${goal.completed}\n`;
+                });
+        
+                modalText.text = goalsText;
+            } catch (error) {
+                console.error('Error:', error);
+                modalText.text = 'Failed to load goals.';
+            }
         
             // Add a close button (or just make the whole modal clickable)
             modal.interactive = true;
@@ -189,7 +203,7 @@ const GameCanvas = () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
             });
-
+        
             app.stage.addChild(modal);
         }
 
@@ -204,8 +218,6 @@ const GameCanvas = () => {
         <div ref={pixiContainer} className="game-canvas-container">
         </div>
     );
-
-    
 };
 
 
