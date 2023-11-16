@@ -45,6 +45,13 @@ const GameCanvas = () => {
         whiteboard.y = app.screen.height / 3;
         app.stage.addChild(whiteboard);
 
+        //change user sprite
+        let changeUser = PIXI.Sprite.from('users.png');
+        changeUser.x = app.screen.width / 2;
+        changeUser.y = app.screen.height / 2;
+        app.stage.addChild(changeUser);
+
+
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
         function changeSprite(newSprite) {
@@ -53,7 +60,6 @@ const GameCanvas = () => {
                 //storing the current sprite position
                 const currentX = currentSprite.x;
                 const currentY = currentSprite.y;
-        
                 app.stage.removeChild(currentSprite);
                 currentSprite = newSprite;
                 currentSprite.anchor.set(0.0);
@@ -149,6 +155,16 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
+        function isNearUsers() {
+            const proximity = 70; // (check console.log distance to view proximity to whiteboard)
+            const dx = currentSprite.x - (changeUser.x + changeUser.width / 2);
+            const dy = currentSprite.y - (changeUser.y + changeUser.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Users:" + distance);
+
+            return distance < proximity;
+        }
+
         async function createModal() {
             // create teh background
             let bg = new PIXI.Graphics();
@@ -192,10 +208,10 @@ const GameCanvas = () => {
                         `${goal.goals} - Completed: ${goal.complete ? 'Yes' : 'No'}`
                     ).join('\n');
             
-                    modalText.text = `VIEWING ALL GOALS\n${goalsText}`;
+                    modalText.text = `Viewing All Goals! (click to close)\n${goalsText}`;
                 } catch (error) {
                     console.error('Error:', error);
-                    modalText.text = 'Failed to load goals.';
+                    modalText.text = 'Internal Network Error: Failed to Load Goals';
                 }
             }
 
