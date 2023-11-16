@@ -24,11 +24,14 @@ const GameCanvas = () => {
         background.height = 1024;
         app.stage.addChild(background);
 
+        //animation test
+        
+
         //sprites
         let downSprite = PIXI.Sprite.from('downsprite.png');
         let upSprite = PIXI.Sprite.from('upsprite.png');
         let leftSprite = PIXI.Sprite.from('leftsprite.png');
-        let rightSprite = PIXI.Sprite.from('rightsprite.png');
+        let rightSprite = PIXI.AnimatedSprite.from('rightsprite.png');
 
         //initial sprite movement (start w/ downsprite)
         let currentSprite = downSprite;
@@ -86,7 +89,7 @@ const GameCanvas = () => {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
-        
+
         function moveRight() {
             currentSprite.x += speed;
             if (spriteCollision(currentSprite, notepad) || spriteCollision(currentSprite, changeUser)) {
