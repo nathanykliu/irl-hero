@@ -38,21 +38,14 @@ const GameCanvas = () => {
         let currentSprite = downSprite;
         app.stage.addChild(currentSprite);
 
-        downSprite.anchor.set(0.5);
+        downSprite.anchor.set(0.0);
         downSprite.x = app.screen.width / 2;
         downSprite.y = app.screen.height / 2;
 
         //whiteboard/notepad creation
         let whiteboard = PIXI.Sprite.from('whiteboard.png');
-
-        //get size of whiteboard.png for collision detection
-
-        const whiteboardTexture = PIXI.Texture.from('whiteboard.png');
         whiteboard.x = app.screen.width / 3;
         whiteboard.y = app.screen.height / 3;
-        whiteboard.width = whiteboardTexture.width;
-        whiteboard.height = whiteboardTexture.height;
-        
         app.stage.addChild(whiteboard);
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
@@ -65,7 +58,7 @@ const GameCanvas = () => {
         
                 app.stage.removeChild(currentSprite);
                 currentSprite = newSprite;
-                currentSprite.anchor.set(0.5);
+                currentSprite.anchor.set(0.0);
         
                 // Set the new sprite's position to the stored position
                 currentSprite.x = currentX;
@@ -80,10 +73,10 @@ const GameCanvas = () => {
         const speed = 5;
 
         function spriteCollision(a, b) {
-            return a.x + a.width > b.x &&
-                   a.x < b.x + b.width &&
-                   a.y + a.height > b.y &&
-                   a.y < b.y + b.height;
+            return a.x - a.width / 2 < b.x + b.width / 2 &&
+                   a.x + a.width / 2 > b.x - b.width / 2 &&
+                   a.y - a.height / 2 < b.y + b.height / 2 &&
+                   a.y + a.height / 2 > b.y - b.height / 2;
         }
 
         function moveLeft() {
