@@ -25,13 +25,74 @@ const GameCanvas = () => {
         app.stage.addChild(background);
 
         //animation test
-        
+        let img = new Image();
+        img.src = "newspritesheet.png";
 
-        //sprites
+        img.onload = () => {
+            createRightAnimation(img);
+        };
+
+        let animatedSpriteRight;
+
+        function createRightAnimation(image) {
+            let baseTexture = new PIXI.BaseTexture(image);
+            let frames = [];
+
+            const frameWidth = 78; // width of each frame
+            const frameHeight = 65; // height of each frame
+            const numberOfFrames = 5; // total number of frames in the sprite sheet
+
+            for (let i = 0; i < numberOfFrames; i++) {
+                let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 0, frameWidth, frameHeight));
+                frames.push(frame);
+            }
+
+            animatedSpriteRight = new PIXI.AnimatedSprite(frames);
+            animatedSpriteRight.animationSpeed = 0.1;
+            animatedSpriteRight.play();
+
+            animatedSpriteRight.visible = false; 
+            app.stage.addChild(animatedSpriteRight);
+
+        }
+
+        //animation left
+        let img2 = new Image();
+        img2.src = "newspritesheet.png";
+
+        img2.onload = () => {
+            createLeftAnimation(img2);
+        };
+
+        let animatedSpriteLeft;
+
+        function createLeftAnimation(image) {
+            let baseTexture = new PIXI.BaseTexture(image);
+            let frames = [];
+
+            const frameWidth = 78; // Width of each frame
+            const frameHeight = 65; // Height of each frame
+            const numberOfFrames = 5; // Total number of frames in the sprite sheet
+
+            for (let i = 0; i < numberOfFrames; i++) {
+                let frame = new PIXI.Texture(baseTexture, new PIXI.Rectangle(i * frameWidth, 65, frameWidth, frameHeight));
+                frames.push(frame);
+            }
+
+            animatedSpriteLeft = new PIXI.AnimatedSprite(frames);
+            animatedSpriteLeft.animationSpeed = 0.1;
+            animatedSpriteLeft.play();
+
+            animatedSpriteLeft.visible = false; 
+            app.stage.addChild(animatedSpriteLeft);
+
+        }
+
+        //static sprites (no idle animation)
         let downSprite = PIXI.Sprite.from('downsprite.png');
         let upSprite = PIXI.Sprite.from('upsprite.png');
         let leftSprite = PIXI.Sprite.from('leftsprite.png');
-        let rightSprite = PIXI.AnimatedSprite.from('rightsprite.png');
+        let rightSprite = PIXI.Sprite.from('rightsprite.png');
 
         //initial sprite movement (start w/ downsprite)
         let currentSprite = downSprite;
@@ -53,7 +114,6 @@ const GameCanvas = () => {
         changeUser.y = app.screen.height / 1.5;
         app.stage.addChild(changeUser);
 
-
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
         function changeSprite(newSprite) {
@@ -67,6 +127,7 @@ const GameCanvas = () => {
                 currentSprite.anchor.set(0.0);
         
                 // Set the new sprite's position to the stored position
+                currentSprite.visible = true;
                 currentSprite.x = currentX;
                 currentSprite.y = currentY;
         
@@ -116,25 +177,35 @@ const GameCanvas = () => {
             switch(e.code) {
                 case 'ArrowLeft':
                     moveLeft();
-                    changeSprite(leftSprite);
-                    currentSprite = leftSprite;
+                    if (animatedSpriteLeft) {
+                        changeSprite(animatedSpriteLeft);
+                    } else {
+                        changeSprite(leftSprite);
+                    }
                     break;
+
                 case 'ArrowRight':
                     moveRight();
-                    changeSprite(rightSprite);
-                    currentSprite = rightSprite;
+                    if (animatedSpriteRight) {
+                        changeSprite(animatedSpriteRight);
+                    } else {
+                        changeSprite(rightSprite);
+                    }
+                    currentSprite=animatedSpriteRight;
                     break;
+        
                 case 'ArrowUp':
                     moveUp();
                     changeSprite(upSprite);
                     currentSprite = upSprite;
                     break;
+
                 case 'ArrowDown':
                     moveDown();
                     changeSprite(downSprite);
                     currentSprite = downSprite;
                     break;
-                
+
                 case 'Space':
                     if (isNearNotepad()) {
                         createGoalsModal();
@@ -148,6 +219,26 @@ const GameCanvas = () => {
                 }   
             }
 
+            function onKeyUp(e) {
+                switch(e.code) {
+                    case 'ArrowRight':
+                        changeSprite(rightSprite);
+                        break;
+                    case 'ArrowLeft':
+                        changeSprite(leftSprite);
+                        break;
+                    case 'ArrowUp':
+                        changeSprite(upSprite);
+                        break;
+                    case 'ArrowDown':
+                        changeSprite(downSprite);
+                        break;
+                    default:
+                        break;
+                } 
+            }
+
+        window.addEventListener('keyup', onKeyUp);
         window.addEventListener('keydown', onKeyDown);
 
         function isNearNotepad() {
@@ -302,6 +393,7 @@ const GameCanvas = () => {
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);
+            window.removeEventListener('keyup', onKeyUp);
             app.destroy();
         };
 
