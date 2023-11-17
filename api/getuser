@@ -18,7 +18,7 @@ const pool = new Pool({
 
 //get one user
 
-app.get('/api/users/:id', async (req, res) => {
+app.get('/api/users', async (req, res) => {
   try {
       const result = await pool.query('SELECT * FROM users;');
       res.json(result.rows);
