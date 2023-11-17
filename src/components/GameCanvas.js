@@ -4,7 +4,11 @@ import * as PIXI from 'pixi.js';
 const GameCanvas = () => {
     const pixiContainer = useRef(null);
 
+   
     useEffect(() => {
+
+        const stage1audio = new Audio('stage1.mp3');
+        let isMusicPlaying = false;
 
         // on mount, create a Pixi.js app and append the canvas to the div
         let app = new PIXI.Application({
@@ -170,13 +174,13 @@ const GameCanvas = () => {
         downSprite.x = app.screen.width / 2;
         downSprite.y = app.screen.height / 2;
 
-        //notepad creation
+        //notepad (getgoals)
         let notepad = PIXI.Sprite.from('notepad.png');
         notepad.x = app.screen.width / 2.25;
         notepad.y = app.screen.height / 3.5;
         app.stage.addChild(notepad);
 
-        //computer changeUser sprite
+        //computer (getusers)
         let changeUser = PIXI.Sprite.from('users.png');
         changeUser.x = app.screen.width / 1.9;
         changeUser.y = app.screen.height / 1.5;
@@ -188,11 +192,17 @@ const GameCanvas = () => {
         keyboard.y = app.screen.height / 1.39;
         app.stage.addChild(keyboard);
 
-        //cell phone getUser sprite
+        //cell phone (getusers/id)
         let cellphone = PIXI.Sprite.from('cellphone.png');
         cellphone.x = app.screen.width / 2.5;
         cellphone.y = app.screen.height / 1.5;
         app.stage.addChild(cellphone);
+
+        //music player
+        let music = PIXI.Sprite.from('music.png');
+        music.x = app.screen.width / 1.6;
+        music.y = app.screen.height / 4;
+        app.stage.addChild(music);
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
@@ -306,6 +316,15 @@ const GameCanvas = () => {
                         createUsersModal();
                     } else if (isNearCellphone()) {
                         createGetUserModal();
+                    } else if (isNearMusic()) {
+                        if (isMusicPlaying) {
+                            stage1audio.pause();
+                            console.log('Music paused!')
+                        } else {
+                        stage1audio.play();
+                        console.log('Music playing!')
+                        }
+                        isMusicPlaying = !isMusicPlaying;
                     }
                     break;
 
@@ -362,6 +381,16 @@ const GameCanvas = () => {
             const dy = currentSprite.y - (cellphone.y + cellphone.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Cellphone:" + distance);
+
+            return distance < proximity;
+        }
+
+        function isNearMusic() {
+            const proximity = 70; // (check console.log distance to view proximity to music)
+            const dx = currentSprite.x - (music.x + music.width / 2);
+            const dy = currentSprite.y - (music.y + music.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Music:" + distance);
 
             return distance < proximity;
         }
@@ -598,7 +627,7 @@ const GameCanvas = () => {
                 modalText.text = "Loading user information...";
 
                 if (!userid) {
-                    modalText.text = "Please enter a User ID.";
+                    modalText.text = "Dog's iPhone";
                     return; // Exit the function if no userid is provided
                 }
 
