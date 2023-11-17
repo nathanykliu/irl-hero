@@ -181,10 +181,10 @@ const GameCanvas = () => {
         app.stage.addChild(notepad);
 
         //computer (getusers)
-        let changeUser = PIXI.Sprite.from('users.png');
-        changeUser.x = app.screen.width / 1.9;
-        changeUser.y = app.screen.height / 1.5;
-        app.stage.addChild(changeUser);
+        let computer = PIXI.Sprite.from('users.png');
+        computer.x = app.screen.width / 1.9;
+        computer.y = app.screen.height / 1.5;
+        app.stage.addChild(computer);
 
         //keyboard in front of computer
         let keyboard = PIXI.Sprite.from('keyboard.png');
@@ -243,28 +243,28 @@ const GameCanvas = () => {
 
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
 
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
                 currentSprite.x -= speed;
             }
         }
         
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
                 currentSprite.y += speed;
             }
         }
 
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, notepad, 5) || spriteCollision(currentSprite, changeUser, 5)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
                 currentSprite.y -= speed;
             }
         }
@@ -367,8 +367,8 @@ const GameCanvas = () => {
 
         function isNearComputer() {
             const proximity = 70; // (check console.log distance to view proximity to computer)
-            const dx = currentSprite.x - (changeUser.x + changeUser.width / 2);
-            const dy = currentSprite.y - (changeUser.y + changeUser.height / 2);
+            const dx = currentSprite.x - (computer.x + computer.width / 2);
+            const dy = currentSprite.y - (computer.y + computer.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Users:" + distance);
 
@@ -533,7 +533,7 @@ const GameCanvas = () => {
         // cell phone modal
         async function createGetUserModal(userid) {
 
-            console.log('UserID:', userid);
+            console.log('Waiting for user input...');
 
             // (get user by id) create the background
             let bg = new PIXI.Graphics();
