@@ -577,7 +577,7 @@ const GameCanvas = () => {
             
 
                 try {
-                    const response = await fetch(`/api/users/${userId}`);
+                    const response = await fetch(`/api/users/`);
                     const user = await response.json();
                     console.log(response)
         
