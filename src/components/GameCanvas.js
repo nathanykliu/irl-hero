@@ -4,7 +4,6 @@ import * as PIXI from 'pixi.js';
 const GameCanvas = () => {
     const pixiContainer = useRef(null);
 
-   
     useEffect(() => {
 
         const stage1audio = new Audio('stage1.mp3');
@@ -225,6 +224,7 @@ const GameCanvas = () => {
             }
         }
 
+        //SET SPEED HERE
         const speed = 5;
 
         //collision logic
@@ -241,6 +241,7 @@ const GameCanvas = () => {
                    a.y + aEffectiveHeight / 2 > b.y - bEffectiveHeight / 2;
         }
 
+        //movement and collision
         function moveLeft() {
             currentSprite.x -= speed;
             if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
@@ -268,8 +269,8 @@ const GameCanvas = () => {
                 currentSprite.y -= speed;
             }
         }
-        
 
+        //keyboard controls
         function onKeyDown(e) {
             switch(e.code) {
                 case 'ArrowLeft':
@@ -626,9 +627,10 @@ const GameCanvas = () => {
             async function loadGetUser(modalText, userid) {
                 modalText.text = "Loading user information...";
 
+                // default text while userid doesn't exist
                 if (!userid) {
                     modalText.text = "Dog's iPhone";
-                    return; // Exit the function if no userid is provided
+                    return;
                 }
 
                 try {
@@ -668,8 +670,6 @@ const GameCanvas = () => {
             app.stage.addChild(modal);
 
         }
-        
-       
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);

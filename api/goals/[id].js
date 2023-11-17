@@ -12,7 +12,7 @@ const pool = new Pool({
   }
 });
 
-// GET one user by ID
+// GET one goal by ID
 app.get('/api/goals/:id', async (req, res) => {
   const goalid = req.params.id;
 
