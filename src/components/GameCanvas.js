@@ -500,6 +500,8 @@ const GameCanvas = () => {
 
         async function createGetUserModal(userId) {
 
+            console.log('UserID:', userId);
+            
             // (get user by id) create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
@@ -579,6 +581,10 @@ const GameCanvas = () => {
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
+
+            if (typeof userId !== 'string') {
+                userId = String(userId);
+            }
         
             //load target user
             await loadGetUser(modalText, userId);
