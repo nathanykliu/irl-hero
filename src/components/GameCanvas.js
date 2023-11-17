@@ -297,11 +297,11 @@ const GameCanvas = () => {
 
                 case 'Space':
                     if (isNearNotepad()) {
-                        createGoalsModal(app);
+                        createGoalsModal();
                     } else if (isNearComputer()) {
-                        createUsersModal(app);
+                        createUsersModal();
                     } else if (isNearCellphone()) {
-                        createGetUserModal(app);
+                        createGetUserModal('1');
                     }
                     break;
 
