@@ -366,6 +366,7 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
+        // notepad modal
         async function createGoalsModal() {
 
             // create the background
@@ -433,6 +434,7 @@ const GameCanvas = () => {
         
         }
         
+        // computer modal
         async function createUsersModal() {
             // create the background
             let bg = new PIXI.Graphics();
@@ -499,6 +501,7 @@ const GameCanvas = () => {
             }
         }
         
+        // cell phone modal
         async function createGetUserModal(userid) {
 
             console.log('UserID:', userid);
@@ -552,8 +555,10 @@ const GameCanvas = () => {
             htmlInput.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
                     let userid = htmlInput.value.trim();
-                    modalText.text = "Searching...";
-                    await loadGetUser(modalText, userid);
+                    if (userid) {
+                        modalText.text = "Searching...";
+                        await loadGetUser(modalText, userid);
+                    }
                 }
             });
 
@@ -591,7 +596,12 @@ const GameCanvas = () => {
 
             async function loadGetUser(modalText, userid) {
                 modalText.text = "Loading user information...";
-                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                if (!userid) {
+                    modalText.text = "Please enter a User ID.";
+                    return; // Exit the function if no userid is provided
+                }
+
                 try {
                     let url = `/api/users/${userid}`;
                     const response = await fetch(url);
