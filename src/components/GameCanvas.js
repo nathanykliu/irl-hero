@@ -499,34 +499,34 @@ const GameCanvas = () => {
 
         async function createGetUserModal(userId) {
 
-            // create the background
+            // (get user by id) create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
             bg.drawRect(0, 0, app.screen.width, app.screen.height);
             bg.endFill();
             app.stage.addChild(bg);
 
-            // create a modal container
+            // (get user by id) create a modal container
             let modal = new PIXI.Container();
             modal.x = app.screen.width / 4;
             modal.y = app.screen.height / 4;
 
-            // add the modal bg
+            // (get user by id) add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 400, 600, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
 
             let htmlInput = document.createElement('input');
             htmlInput.type = 'text';
             htmlInput.style.position = 'absolute';
-            htmlInput.style.top = `${modal.y + 100}px`; // Adjust based on your modal's position
-            htmlInput.style.left = `${modal.x + 20}px`; // Adjust based on your modal's position
+            htmlInput.style.top = `${modal.y + 400}px`; // Adjust based on your modal's position
+            htmlInput.style.left = `${modal.x + 500}px`; // Adjust based on your modal's position
             htmlInput.style.width = '200px';
             document.body.appendChild(htmlInput);
 
-            // Focus the input when the modal opens
+            // focus the input
             htmlInput.focus();
 
             // Event listener for Enter key
@@ -534,6 +534,7 @@ const GameCanvas = () => {
                 if (event.key === 'Enter') {
                     let userId = htmlInput.value;
                     await loadGetUser(modalText, userId);
+                    console.log(userId);
                 }
             });
             
@@ -586,6 +587,7 @@ const GameCanvas = () => {
                 try {
                     const response = await fetch(`/api/users/${userId}`);
                     const user = await response.json();
+                    console.log(response)
         
                     modalText.text = `User Details:\n\nName: ${user.firstname} ${user.lastname}\nStage: ${user.stage}`;
                 } catch (error) {
