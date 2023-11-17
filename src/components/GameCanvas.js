@@ -574,14 +574,23 @@ const GameCanvas = () => {
             await loadGetUser(modalText, userId);
 
             async function loadGetUser(modalText, userId) {
-            
-
                 try {
-                    const response = await fetch(`/api/users/`);
-                    const user = await response.json();
-                    console.log(response)
-        
-                    modalText.text = `User Details:\n\nName: ${user.firstname} ${user.lastname}\nStage: ${user.stage}`;
+                    let url = userId ? `/api/users/${userId}` : '/api/users/';
+                    const response = await fetch(url);
+                    const data = await response.json();
+            
+                    console.log(data); // See what you're getting here
+            
+                    if (Array.isArray(data)) {
+                        // Handle the response as an array (for '/api/users/')
+                        let usersText = data.map(user => 
+                            `ID: ${user.id}, Name: ${user.firstname} ${user.lastname}, Stage: ${user.stage}`
+                        ).join('\n');
+                        modalText.text = `All Users:\n\n${usersText}`;
+                    } else {
+                        // Handle the response as an object (for '/api/users/:id')
+                        modalText.text = `User Details:\n\nName: ${data.firstname} ${data.lastname}\nStage: ${data.stage}`;
+                    }
                 } catch (error) {
                     console.error('Error:', error);
                     modalText.text = 'Internal Network Error: Failed to Load User Details';
