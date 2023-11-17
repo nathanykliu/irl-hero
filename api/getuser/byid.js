@@ -13,7 +13,7 @@ const pool = new Pool({
 });
 
 // GET one user by ID
-app.get('/api/test/id', async (req, res) => {
+app.get('/api/getuser/byid', async (req, res) => {
   const userid = 1
   
   // make sure that userId is a number
