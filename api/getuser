@@ -16,20 +16,30 @@ const pool = new Pool({
   }
 });
 
-app.get('/api/users/:id', async (req, res) => {
+app.get('/api/users', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [req.params.id]);
-    res.status(200).json(rows[0] || {});
-
-    //invalid id
-    if (rows.length === 0) {
-      return res.status(404).send('User not found');
-    }
-    
+    const { rows } = await pool.query('SELECT * FROM users;');
+    res.status(200).json(rows);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 });
+
+// app.get('/api/users/:id', async (req, res) => {
+//   try {
+//     const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [req.params.id]);
+//     res.status(200).json(rows[0] || {});
+
+//     //invalid id
+//     if (rows.length === 0) {
+//       return res.status(404).send('User not found');
+//     }
+    
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server Error');
+//   }
+// });
 
 module.exports = app;
