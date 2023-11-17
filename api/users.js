@@ -27,9 +27,8 @@ app.get('/api/users', async (req, res) => {
 });
 
 app.get('/api/users/:id', async (req, res) => {
-  const userid = parseInt(req.params.id);
-  
-  res.send(`You have requested user ${userid}`)
+
+  res.send(`testing!`)
 
   // Validate that userId is a number
   if (isNaN(userid)) {
