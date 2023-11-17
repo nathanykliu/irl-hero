@@ -495,13 +495,10 @@ const GameCanvas = () => {
             }
         }
         
-        
-        
-
         async function createGetUserModal(userId) {
 
             console.log('UserID:', userId);
-            
+
             // (get user by id) create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
@@ -535,7 +532,7 @@ const GameCanvas = () => {
             // Event listener for Enter key
             htmlInput.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
-                    let userId = htmlInput.value;
+                    let userId = htmlInput.value.trim();
                     await loadGetUser(modalText, userId);
                 }
             });
@@ -564,7 +561,7 @@ const GameCanvas = () => {
             button.buttonMode = true;
             button.on('pointerdown', async () => {
                 // Here you pass the input from the input field to the loadGetUser function
-                let userId = htmlInput.value; // Assuming the text in inputText is the user ID
+                let userId = htmlInput.value.trim(); // Assuming the text in inputText is the user ID
                 await loadGetUser(modalText, userId);
             });
         
@@ -590,6 +587,8 @@ const GameCanvas = () => {
             await loadGetUser(modalText, userId);
 
             async function loadGetUser(modalText, userId) {
+            
+
                 try {
                     const response = await fetch(`/api/users/${userId}`);
                     const user = await response.json();
