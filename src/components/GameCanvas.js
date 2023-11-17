@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as PIXI from 'pixi.js';
+import { createGoalsModal } from './modals.js';
 
 const GameCanvas = () => {
     const pixiContainer = useRef(null);
@@ -14,7 +15,7 @@ const GameCanvas = () => {
         });
 
         pixiContainer.current.appendChild(app.view);
-
+        
         //background
         let background = PIXI.Sprite.from('stage1background.png');
         background.anchor.set(0, 0);
@@ -172,11 +173,23 @@ const GameCanvas = () => {
         notepad.y = app.screen.height / 3.5;
         app.stage.addChild(notepad);
 
-        //change user computer sprite
+        //computer changeUser sprite
         let changeUser = PIXI.Sprite.from('users.png');
         changeUser.x = app.screen.width / 1.9;
         changeUser.y = app.screen.height / 1.5;
         app.stage.addChild(changeUser);
+
+        //keyboard in front of computer
+        let keyboard = PIXI.Sprite.from('keyboard.png');
+        keyboard.x = app.screen.width / 1.865;
+        keyboard.y = app.screen.height / 1.39;
+        app.stage.addChild(keyboard);
+
+        //cell phone getUser sprite
+        let cellphone = PIXI.Sprite.from('cellphone.png');
+        cellphone.x = app.screen.width / 2.5;
+        cellphone.y = app.screen.height / 1.5;
+        app.stage.addChild(cellphone);
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
@@ -288,6 +301,8 @@ const GameCanvas = () => {
                         createGoalsModal();
                     } else if (isNearComputer()) {
                         createUsersModal();
+                    } else if (isNearCellphone()) {
+                        createGetUserModal();
                     }
                     break;
 
@@ -338,71 +353,16 @@ const GameCanvas = () => {
             return distance < proximity;
         }
 
-        async function createGoalsModal() {
+        function isNearCellphone() {
+            const proximity = 70; // (check console.log distance to view proximity to cellphone)
+            const dx = currentSprite.x - (cellphone.x + cellphone.width / 2);
+            const dy = currentSprite.y - (cellphone.y + cellphone.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Cellphone:" + distance);
 
-            // create the background
-            let bg = new PIXI.Graphics();
-            bg.beginFill(0x000000, 0.5);
-            bg.drawRect(0, 0, app.screen.width, app.screen.height);
-            bg.endFill();
-            app.stage.addChild(bg);
-        
-            // create a modal container
-            let modal = new PIXI.Container();
-            modal.x = app.screen.width / 4;
-            modal.y = app.screen.height / 4;
-        
-            // add the modal bg
-            let modalBg = new PIXI.Graphics();
-            modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
-            modalBg.endFill();
-            modal.addChild(modalBg);
-        
-            // add the modal text
-            let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
-                fontSize: 24,
-                fill: '#000000',
-                wordWrap: true,
-                wordWrapWidth: 600,
-            });
-        
-            let modalText = new PIXI.Text('Loading goals...', textStyle);
-            modalText.x = 20;
-            modalText.y = 20;
-            modal.addChild(modalText);
-        
-            // Load Goals
-            await loadGoals(modalText);
-
-            async function loadGoals(modalText) {
-                try {
-                    const response = await fetch('/api/goals');
-                    const goals = await response.json();
-            
-                    let goalsText = goals.map(goal => 
-                        `${goal.goals} - Completed: ${goal.complete ? 'Yes' : 'No'}`
-                    ).join('\n');
-            
-                    modalText.text = `Viewing All Goals! (click to close)\n${goalsText}`;
-                } catch (error) {
-                    console.error('Error:', error);
-                    modalText.text = 'Internal Network Error: Failed to Load Goals';
-                }
-            }
-        
-            // click to close
-            modal.interactive = true;
-            modal.buttonMode = true;
-            modal.on('pointerdown', () => {
-                app.stage.removeChild(bg);
-                app.stage.removeChild(modal);
-            });
-        
-            app.stage.addChild(modal);
-
+            return distance < proximity;
         }
+
 
         async function createUsersModal() {
             // create the background
@@ -450,6 +410,123 @@ const GameCanvas = () => {
             });
         
             app.stage.addChild(modal);
+        }
+
+        async function createGetUserModal(userId) {
+
+            // create the background
+            let bg = new PIXI.Graphics();
+            bg.beginFill(0x000000, 0.5);
+            bg.drawRect(0, 0, app.screen.width, app.screen.height);
+            bg.endFill();
+            app.stage.addChild(bg);
+
+            // create a modal container
+            let modal = new PIXI.Container();
+            modal.x = app.screen.width / 4;
+            modal.y = app.screen.height / 4;
+
+            // add the modal bg
+            let modalBg = new PIXI.Graphics();
+            modalBg.beginFill(0xFFFFFF); // white bg
+            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
+            modalBg.endFill();
+            modal.addChild(modalBg);
+
+            //create input field for userid
+            let inputField = new PIXI.Graphics();
+            inputField.beginFill(0xFFFFFF); // white background for input field
+            inputField.drawRoundedRect(0, 0, 200, 30, 5); // adjust size as needed
+            inputField.endFill();
+            inputField.x = 20;
+            inputField.y = 100;
+            modal.addChild(inputField);
+
+            // Text for input field
+            let inputText = new PIXI.Text('', {
+                fontFamily: 'Arial',
+                fontSize: 16,
+                fill: '#000000'
+            });
+            inputText.x = 25;
+            inputText.y = 105;
+            modal.addChild(inputText);
+
+            // Interactivity for input field
+            inputField.interactive = true;
+            inputField.buttonMode = true;
+            inputField.on('pointerdown', () => {
+                // Implement functionality to focus and enter text
+                // Note: PIXI.js does not support text input directly, so you may need a workaround
+            });
+            
+            //create a get button
+            let button = new PIXI.Graphics();
+            button.beginFill(0x00FF00); // green button
+            button.drawRoundedRect(0, 0, 80, 30, 5); // adjust size as needed
+            button.endFill();
+            button.x = 230;
+            button.y = 100;
+            modal.addChild(button);
+
+            // Button text
+            let buttonText = new PIXI.Text('Get', {
+                fontFamily: 'Arial',
+                fontSize: 16,
+                fill: '#FFFFFF' // white text
+            });
+            buttonText.x = button.x + 20;
+            buttonText.y = button.y + 5;
+            modal.addChild(buttonText);
+
+            // Button interactivity
+            button.interactive = true;
+            button.buttonMode = true;
+            button.on('pointerdown', async () => {
+                // Here you pass the input from the input field to the loadGetUser function
+                let userId = inputText.text; // Assuming the text in inputText is the user ID
+                await loadGetUser(modalText, userId);
+            });
+        
+            //add the modal text
+            let textStyle = new PIXI.TextStyle({
+                fontFamily: 'Arial',
+                fontSize: 24,
+                fill: '#000000',
+                wordWrap: true,
+                wordWrapWidth: 600,
+            });
+        
+            let modalText = new PIXI.Text('Enter User ID and click Get', textStyle);
+            modalText.x = 20;
+            modalText.y = 20;
+            modal.addChild(modalText);
+        
+            //load target user
+            await loadGetUser(modalText, userId);
+
+            async function loadGetUser(modalText, userId) {
+                try {
+                    const response = await fetch(`/api/users/${userId}`);
+                    const user = await response.json();
+        
+                    modalText.text = `User Details:\n\nName: ${user.firstname} ${user.lastname}\nStage: ${user.stage}`;
+                } catch (error) {
+                    console.error('Error:', error);
+                    modalText.text = 'Internal Network Error: Failed to Load User Details';
+                }
+            }
+
+            // click to close
+            modal.interactive = true;
+            modal.buttonMode = true;
+            modal.on('pointerdown', () => {
+                app.stage.removeChild(bg);
+                app.stage.removeChild(modal);
+            });
+        
+            app.stage.addChild(modal);
+
         }
         
         async function loadUsers(modalText) {
