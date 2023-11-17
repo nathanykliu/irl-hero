@@ -574,12 +574,24 @@ const GameCanvas = () => {
             await loadGetUser(modalText, userid);
 
             async function loadGetUser(modalText, userid) {
-                try {
-                    let url = userid ? `/api/users/${userid}` : '/api/users/';
-                    const response = await fetch(url);
-                    const data = await response.json();
+                if (!userid || isNaN(Number(userid))) {
+                    modalText.text = 'Invalid User ID';
+                    return;
+                }
             
-                    console.log(data); // See what you're getting here
+                try {
+                    let url = `/api/users/${userid}`;
+                    const response = await fetch(url);
+            
+                    console.log('Requesting:', url); // Log the URL being requested
+                    console.log('Response Status:', response.status); // Log the response status
+            
+                    if (!response.ok) {
+                        throw new Error(`HTTP Error: ${response.status}`);
+                    }
+            
+                    const data = await response.json();
+                    console.log('Response Data:', data); // Log the received data
             
                     if (Array.isArray(data)) {
                         // Handle the response as an array (for '/api/users/')
@@ -593,9 +605,10 @@ const GameCanvas = () => {
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    modalText.text = 'Internal Network Error: Failed to Load User Details';
+                    modalText.text = 'Error: ' + error.message;
                 }
             }
+            
 
             // click to close
             modal.interactive = true;
