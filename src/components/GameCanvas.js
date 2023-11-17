@@ -404,6 +404,7 @@ const GameCanvas = () => {
                 try {
                     const response = await fetch('/api/goals');
                     const goals = await response.json();
+                    console.log(goals)
             
                     let goalsText = goals.map(goal => 
                         `${goal.goals} - Completed: ${goal.complete ? 'Yes' : 'No'}`
@@ -534,7 +535,6 @@ const GameCanvas = () => {
                 if (event.key === 'Enter') {
                     let userId = htmlInput.value;
                     await loadGetUser(modalText, userId);
-                    console.log(userId);
                 }
             });
             
@@ -575,7 +575,7 @@ const GameCanvas = () => {
                 wordWrapWidth: 600,
             });
         
-            let modalText = new PIXI.Text('Enter User ID and click Get', textStyle);
+            let modalText = new PIXI.Text('Enter User ID and press Enter', textStyle);
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
