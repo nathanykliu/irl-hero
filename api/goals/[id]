@@ -13,16 +13,16 @@ const pool = new Pool({
 });
 
 // GET one user by ID
-app.get('/api/getuser/:id', async (req, res) => {
-  const userid = req.params.id;
+app.get('/api/goals/:id', async (req, res) => {
+  const goalid = req.params.id;
 
   // validate that userId is a number
-  if (isNaN(userid)) {
+  if (isNaN(goalid)) {
     return res.status(400).send('Invalid user ID');
   }
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userid]);
+    const result = await pool.query('SELECT * FROM goals WHERE User_id = $1', [goalid]);
     if (result.rows.length === 0) {
       return res.status(404).send('User not found');
     }
