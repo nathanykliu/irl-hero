@@ -629,7 +629,7 @@ const GameCanvas = () => {
 
                 // default text while userid doesn't exist
                 if (!userid) {
-                    modalText.text = "Dog's iPhone";
+                    modalText.text = "Dogfather's iPhone";
                     return;
                 }
 
