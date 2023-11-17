@@ -518,31 +518,23 @@ const GameCanvas = () => {
             modalBg.endFill();
             modal.addChild(modalBg);
 
-            //create input field for userid
-            let inputField = new PIXI.Graphics();
-            inputField.beginFill(0xFFFFFF); // white background for input field
-            inputField.drawRoundedRect(0, 0, 200, 30, 5); // adjust size as needed
-            inputField.endFill();
-            inputField.x = 20;
-            inputField.y = 100;
-            modal.addChild(inputField);
+            let htmlInput = document.createElement('input');
+            htmlInput.type = 'text';
+            htmlInput.style.position = 'absolute';
+            htmlInput.style.top = `${modal.y + 100}px`; // Adjust based on your modal's position
+            htmlInput.style.left = `${modal.x + 20}px`; // Adjust based on your modal's position
+            htmlInput.style.width = '200px';
+            document.body.appendChild(htmlInput);
 
-            // Text for input field
-            let inputText = new PIXI.Text('', {
-                fontFamily: 'Arial',
-                fontSize: 16,
-                fill: '#000000'
-            });
-            inputText.x = 25;
-            inputText.y = 105;
-            modal.addChild(inputText);
+            // Focus the input when the modal opens
+            htmlInput.focus();
 
-            // Interactivity for input field
-            inputField.interactive = true;
-            inputField.buttonMode = true;
-            inputField.on('pointerdown', () => {
-                // Implement functionality to focus and enter text
-                // Note: PIXI.js does not support text input directly, so you may need a workaround
+            // Event listener for Enter key
+            htmlInput.addEventListener('keydown', async (event) => {
+                if (event.key === 'Enter') {
+                    let userId = htmlInput.value;
+                    await loadGetUser(modalText, userId);
+                }
             });
             
             //create a get button
@@ -569,7 +561,7 @@ const GameCanvas = () => {
             button.buttonMode = true;
             button.on('pointerdown', async () => {
                 // Here you pass the input from the input field to the loadGetUser function
-                let userId = inputText.text; // Assuming the text in inputText is the user ID
+                let userId = htmlInput.value; // Assuming the text in inputText is the user ID
                 await loadGetUser(modalText, userId);
             });
         
@@ -608,6 +600,7 @@ const GameCanvas = () => {
             modal.on('pointerdown', () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
+                document.body.removeChild(htmlInput)
             });
         
             app.stage.addChild(modal);
