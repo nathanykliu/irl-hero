@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@vercel/postgres": "^0.5.1",
     "cors": "^2.8.5",
+    "micromodal": "^0.4.10",
     "pg": "^8.11.3",
     "pixi.js": "^7.3.2",
     "postgres": "^3.4.3",

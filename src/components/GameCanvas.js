@@ -575,10 +575,10 @@ const GameCanvas = () => {
 
             async function loadGetUser(modalText, userid) {
                 if (!userid || isNaN(Number(userid))) {
-                    modalText.text = 'Invalid User ID';
+                    modalText.text = 'Dog\'s iPhone';
                     return;
                 }
-            
+
                 try {
                     let url = `/api/users/${userid}`;
                     const response = await fetch(url);
@@ -601,7 +601,6 @@ const GameCanvas = () => {
                     modalText.text = 'Error: ' + error.message;
                 }
             }
-            
 
             // click to close
             modal.interactive = true;
