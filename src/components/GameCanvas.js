@@ -773,12 +773,11 @@ const GameCanvas = () => {
                 if (event.key === 'Enter') {
                     const goal = goalInput.value.trim();
                     const days = parseInt(daysInput.value.trim());
-                    const complete = completeInput.checked;
                     const userId = parseInt(userIdInput.value.trim());
         
                     if (goal && !isNaN(days) && !isNaN(userId)) {
                         modalText.text = "Adding goal...";
-                        await addGoal({ goals: goal, days, complete, userId });
+                        await addGoal({ goals: goal, days, complete: false, userId });
                     }
                 }
             });
@@ -795,7 +794,7 @@ const GameCanvas = () => {
             buttonText.anchor.set(0.5, 0.5);
             buttonText.x = button.x + (button.width / 2);
             buttonText.y = button.y + (button.height / 2);
-            
+
             modal.addChild(buttonText);
 
             //input fields for adding a goal
@@ -816,13 +815,6 @@ const GameCanvas = () => {
             daysInput.style.left = `${inputX}px`;
             daysInput.style.width = '200px';
             document.body.appendChild(daysInput);
-
-            let completeInput = document.createElement('input');
-            completeInput.type = 'checkbox';
-            completeInput.style.position = 'absolute';
-            completeInput.style.top = `${inputY}px`; // Adjust position
-            completeInput.style.left = `${inputX}px`;
-            document.body.appendChild(completeInput);
 
             let userIdInput = document.createElement('input');
             userIdInput.type = 'number';
@@ -879,7 +871,7 @@ const GameCanvas = () => {
                 document.body.removeChild(htmlInput)
                 document.body.removeChild(goalInput);
                 document.body.removeChild(daysInput);
-                document.body.removeChild(completeInput);
+
                 document.body.removeChild(userIdInput);
             });
 
