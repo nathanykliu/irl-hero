@@ -24,14 +24,16 @@ const GameCanvas = () => {
         background.height = 1024;
         app.stage.addChild(background);
 
-        //animation test
+        // right animation
         let img = new Image();
+        //load spritesheet
         img.src = "newspritesheet.png";
 
         img.onload = () => {
             createRightAnimation(img);
         };
 
+        //create an instance first
         let animatedSpriteRight;
 
         function createRightAnimation(image) {
@@ -47,10 +49,12 @@ const GameCanvas = () => {
                 frames.push(frame);
             }
 
+            //create the animated sprite, set speed
             animatedSpriteRight = new PIXI.AnimatedSprite(frames);
             animatedSpriteRight.animationSpeed = 0.1;
             animatedSpriteRight.play();
 
+            //hide until used
             animatedSpriteRight.visible = false; 
             app.stage.addChild(animatedSpriteRight);
 
@@ -215,7 +219,7 @@ const GameCanvas = () => {
 
         //collision logic
         function spriteCollision(a, b, collisionMargin) {
-            // Reduce the effective size of each sprite's collision area by the margin
+            // reduce the effective size of each sprite's collision area by the margin
             let aEffectiveWidth = a.width - collisionMargin;
             let aEffectiveHeight = a.height - collisionMargin;
             let bEffectiveWidth = b.width - collisionMargin;
@@ -397,7 +401,7 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
         
-            // Load Goals
+            // load Goals
             await loadGoals(modalText);
         
             async function loadGoals(modalText) {
@@ -524,7 +528,7 @@ const GameCanvas = () => {
             button.drawRoundedRect(0, 0, 200, 40, 5);
             button.endFill();
             button.x = 100;
-            button.y = 100;
+            button.y = 200;
             button.cursor = 'pointer';
             modal.addChild(button);
 
@@ -560,12 +564,12 @@ const GameCanvas = () => {
                 fill: '#FFFFFF',
                 align: 'center' 
             });
-            buttonText.x = button.x + 10;
-            buttonText.y = button.y + 10; 
-            modal.addChild(buttonText);
-
-            buttonText.x = button.x + 5 ; 
-            buttonText.y = button.y + 5;
+            
+            // calculate the position to center the text on the button
+            buttonText.anchor.set(0.5, 0.5);
+            buttonText.x = button.x + (button.width / 2);
+            buttonText.y = button.y + (button.height / 2);
+            
             modal.addChild(buttonText);
 
             //add the modal text
