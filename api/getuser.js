@@ -3,9 +3,8 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
 
-app.use(cors()); // Enable CORS
+app.use(cors());
 
-// Setup PostgreSQL connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -17,7 +16,7 @@ const pool = new Pool({
 app.get('/api/getuser/:id', async (req, res) => {
   const userid = req.params.id;
 
-  // Validate that userId is a number
+  // validate that userId is a number
   if (isNaN(userid)) {
     return res.status(400).send('Invalid user ID');
   }
