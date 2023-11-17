@@ -585,7 +585,7 @@ const GameCanvas = () => {
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
-        
+
             //load target user
             await loadGetUser(modalText, userid);
 
