@@ -1,6 +1,8 @@
 import './App.css';
 import React from 'react';
 import GameCanvas from './components/GameCanvas';
+import { Analytics } from '@vercel/analytics/react'
+
 document.addEventListener('DOMContentLoaded', (event) => {
   var intromodal = document.getElementById("intromodal");
   var closeButton = document.getElementsByClassName("intromodal-close")[0];
@@ -29,6 +31,7 @@ const App = () => {
   return (
       <div className="App">
           <GameCanvas />
+          <Analytics />
       </div>
   );
 };
