@@ -7,6 +7,7 @@ const GameCanvas = () => {
     useEffect(() => {
 
         const stage1audio = new Audio('stage1.mp3');
+        const stage1Secret = new Audio('stage1secret.mp3');
         let isMusicPlaying = false;
 
         // on mount, create a Pixi.js app and append the canvas to the div
@@ -203,6 +204,12 @@ const GameCanvas = () => {
         music.y = app.screen.height / 4;
         app.stage.addChild(music);
 
+        //secret player
+        let secret = PIXI.Sprite.from('secret.png');
+        secret.x = app.screen.width / 1.8;
+        secret.y = app.screen.height / 3;
+        app.stage.addChild(secret);
+
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
         function changeSprite(newSprite) {
@@ -244,28 +251,28 @@ const GameCanvas = () => {
         //movement and collision
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
 
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
                 currentSprite.x -= speed;
             }
         }
 
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
                 currentSprite.y += speed;
             }
         }
 
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
                 currentSprite.y -= speed;
             }
         }
@@ -317,6 +324,15 @@ const GameCanvas = () => {
                         createUsersModal();
                     } else if (isNearCellphone()) {
                         createGetUserModal();
+                    } else if (isNearSecret()) {
+                        if (isMusicPlaying) {
+                            stage1Secret.pause();
+                            console.log('Secret paused!')
+                        } else {
+                            stage1Secret.play();
+                            console.log('Secret playing!')
+                        }
+                        isMusicPlaying = !isMusicPlaying;
                     } else if (isNearMusic()) {
                         if (isMusicPlaying) {
                             stage1audio.pause();
@@ -362,6 +378,16 @@ const GameCanvas = () => {
             const dy = currentSprite.y - (notepad.y + notepad.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Notebook:" + distance);
+
+            return distance < proximity;
+        }
+
+        function isNearSecret() {
+            const proximity = 90; // (check console.log distance to view proximity to secret)
+            const dx = currentSprite.x - (secret.x + secret.width / 2);
+            const dy = currentSprite.y - (secret.y + secret.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Secret:" + distance);
 
             return distance < proximity;
         }
@@ -414,7 +440,7 @@ const GameCanvas = () => {
             // add.on
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 700, 600, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 500, 500, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
         
