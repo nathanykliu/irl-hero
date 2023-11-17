@@ -590,8 +590,8 @@ const GameCanvas = () => {
             await loadGetUser(modalText, userid);
 
             async function loadGetUser(modalText, userid) {
-                modalText.text = "Dog's iPhone";
-
+                modalText.text = "Loading user information...";
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 try {
                     let url = `/api/users/${userid}`;
                     const response = await fetch(url);
