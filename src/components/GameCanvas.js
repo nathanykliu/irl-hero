@@ -495,9 +495,9 @@ const GameCanvas = () => {
             }
         }
         
-        async function createGetUserModal(userId) {
+        async function createGetUserModal(userid) {
 
-            console.log('UserID:', userId);
+            console.log('UserID:', userid);
 
             // (get user by id) create the background
             let bg = new PIXI.Graphics();
@@ -532,8 +532,8 @@ const GameCanvas = () => {
             // Event listener for Enter key
             htmlInput.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
-                    let userId = htmlInput.value.trim();
-                    await loadGetUser(modalText, userId);
+                    let userid = htmlInput.value.trim();
+                    await loadGetUser(modalText, userid);
                 }
             });
             
@@ -571,11 +571,11 @@ const GameCanvas = () => {
             modal.addChild(modalText);
         
             //load target user
-            await loadGetUser(modalText, userId);
+            await loadGetUser(modalText, userid);
 
-            async function loadGetUser(modalText, userId) {
+            async function loadGetUser(modalText, userid) {
                 try {
-                    let url = userId ? `/api/users/${userId}` : '/api/users/';
+                    let url = userid ? `/api/users/${userid}` : '/api/users/';
                     const response = await fetch(url);
                     const data = await response.json();
             
