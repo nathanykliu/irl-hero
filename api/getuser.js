@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 // GET one user by ID
-app.get('/api/getusers/:id', async (req, res) => {
+app.get('/api/getuser/:id', async (req, res) => {
   const userid = parseInt(req.params.id);
   
   res.send(`You have requested user ${userid}`)
