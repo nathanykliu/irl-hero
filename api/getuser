@@ -31,6 +31,9 @@ app.get('/api/users/:id', async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
+    const error = new Error(response.statusText);
+    error.response = response;
+    error.data = data;
     console.error('Error fetching user:', err);
     res.status(500).send('Server error');
   }
