@@ -257,28 +257,32 @@ const GameCanvas = () => {
         //movement and collision
         function moveLeft() {
             currentSprite.x -= speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) 
+            || spriteCollision(currentSprite, secret, 30) || spriteCollision(currentSprite, pencil, 30)) {
                 currentSprite.x += speed; // stop sprite movement
             }
         }
 
         function moveRight() {
             currentSprite.x += speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)
+            || spriteCollision(currentSprite, secret, 30) || spriteCollision(currentSprite, pencil, 30)) {
                 currentSprite.x -= speed;
             }
         }
 
         function moveUp() {
             currentSprite.y -= speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)
+            || spriteCollision(currentSprite, secret, 30) || spriteCollision(currentSprite, pencil, 30)) {
                 currentSprite.y += speed;
             }
         }
 
         function moveDown() {
             currentSprite.y += speed;
-            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30) || spriteCollision(currentSprite, secret, 30)) {
+            if (spriteCollision(currentSprite, notepad, 30) || spriteCollision(currentSprite, computer, 30) || spriteCollision(currentSprite, music, 30)
+            || spriteCollision(currentSprite, secret, 30) || spriteCollision(currentSprite, pencil, 30)) {
                 currentSprite.y -= speed;
             }
         }
