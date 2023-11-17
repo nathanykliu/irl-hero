@@ -26,9 +26,27 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
-app.get('/api/users/:id', async (req, res) => {
+app.get('/api/users/1', async (req, res) => {
 
-  res.send(`testing!`)
+  const userid = 1;
+  // Validate that userId is a number
+  if (isNaN(userid)) {
+    return res.status(400).send('Invalid user ID');
+  }
+
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userid]);
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching user:', err);
+    res.status(500).send('Server error');
+  }
+});
+
+app.get('/api/users/test', async (req, res) => {
+
+  res.send('testing!')
   ///test
 
   // Validate that userId is a number
@@ -45,5 +63,6 @@ app.get('/api/users/:id', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 module.exports = app;
