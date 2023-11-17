@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.modal {
+.intromodal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -23,25 +23,31 @@ code {
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
 }
-
-.modal-content {
+.intromodal-content {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 500px;
+  border-radius: 10px;
+  text-align: center; /* Center align text */
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
+.intromodal-close {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
   text-decoration: none;
+  display: block; /* Make button a block element */
+  font-size: 16px;
+  margin: 20px auto; /* Center the button */
+  transition-duration: 0.4s;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.intromodal-close:hover {
+  background-color: #45a049; /* Darker green on hover */
 }
