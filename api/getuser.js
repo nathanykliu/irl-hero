@@ -13,8 +13,6 @@ const pool = new Pool({
   }
 });
 
-console.log('here!')
-
 // GET one user by ID
 app.get('/api/users/:id', async (req, res) => {
   const userid = parseInt(req.params.id);
