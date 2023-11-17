@@ -540,19 +540,19 @@ const GameCanvas = () => {
             //create a get button
             let button = new PIXI.Graphics();
             button.beginFill(0x00FF00); // green button
-            button.drawRoundedRect(0, 0, 80, 30, 5); // adjust size as needed
+            button.drawRoundedRect(0, 0, 400, 200, 5); // adjust size as needed
             button.endFill();
-            button.x = 230;
+            button.x = 2;
             button.y = 100;
             modal.addChild(button);
 
             // Button text
-            let buttonText = new PIXI.Text('Get', {
+            let buttonText = new PIXI.Text('You are doing great! Now press Enter to search for a user by ID!', {
                 fontFamily: 'Arial',
                 fontSize: 16,
                 fill: '#FFFFFF' // white text
             });
-            buttonText.x = button.x + 20;
+            buttonText.x = button.x - 20; 
             buttonText.y = button.y + 5;
             modal.addChild(buttonText);
 
@@ -593,16 +593,9 @@ const GameCanvas = () => {
                     const data = await response.json();
                     console.log('Response Data:', data); // Log the received data
             
-                    if (Array.isArray(data)) {
-                        // Handle the response as an array (for '/api/users/')
-                        let usersText = data.map(user => 
-                            `ID: ${user.id}, Name: ${user.firstname} ${user.lastname}, Stage: ${user.stage}`
-                        ).join('\n');
-                        modalText.text = `All Users:\n\n${usersText}`;
-                    } else {
-                        // Handle the response as an object (for '/api/users/:id')
-                        modalText.text = `User Details:\n\nName: ${data.firstname} ${data.lastname}\nStage: ${data.stage}`;
-                    }
+                    // Handle the response as an object (for '/api/users/:id')
+                    modalText.text = `User Details:\n\nName: ${data.firstname} ${data.lastname}\nStage: ${data.stage}`;
+                
                 } catch (error) {
                     console.error('Error:', error);
                     modalText.text = 'Error: ' + error.message;
