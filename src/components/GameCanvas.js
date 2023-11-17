@@ -176,7 +176,7 @@ const GameCanvas = () => {
 
         //notepad (getgoals)
         let notepad = PIXI.Sprite.from('notepad.png');
-        notepad.x = app.screen.width / 2.25;
+        notepad.x = app.screen.width / 2.7;
         notepad.y = app.screen.height / 3.5;
         app.stage.addChild(notepad);
 
@@ -209,6 +209,12 @@ const GameCanvas = () => {
         secret.x = app.screen.width / 1.8;
         secret.y = app.screen.height / 3;
         app.stage.addChild(secret);
+
+        //pencil
+        let pencil = PIXI.Sprite.from('pencil.png');
+        pencil.x = app.screen.width / 2.2;
+        pencil.y = app.screen.height / 3.5;
+        app.stage.addChild(pencil);
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
@@ -324,6 +330,8 @@ const GameCanvas = () => {
                         createUsersModal();
                     } else if (isNearCellphone()) {
                         createGetUserModal();
+                    } else if (isNearPencil()) {
+                        createAddGoalModal();
                     } else if (isNearSecret()) {
                         if (isMusicPlaying) {
                             stage1Secret.pause();
@@ -332,16 +340,16 @@ const GameCanvas = () => {
                             stage1Secret.play();
                             console.log('Secret playing!')
                         }
-                        isMusicPlaying = !isMusicPlaying;
+                            isMusicPlaying = !isMusicPlaying;
                     } else if (isNearMusic()) {
                         if (isMusicPlaying) {
                             stage1audio.pause();
                             console.log('Music paused!')
                         } else {
-                        stage1audio.play();
-                        console.log('Music playing!')
+                            stage1audio.play();
+                            console.log('Music playing!')
                         }
-                        isMusicPlaying = !isMusicPlaying;
+                            isMusicPlaying = !isMusicPlaying;
                     }
                     break;
 
@@ -373,7 +381,7 @@ const GameCanvas = () => {
         window.addEventListener('keydown', onKeyDown);
 
         function isNearNotepad() {
-            const proximity = 70; // (check console.log distance to view proximity to whiteboard)
+            const proximity = 50; // (check console.log distance to view proximity to whiteboard)
             const dx = currentSprite.x - (notepad.x + notepad.width / 2);
             const dy = currentSprite.y - (notepad.y + notepad.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -383,7 +391,7 @@ const GameCanvas = () => {
         }
 
         function isNearSecret() {
-            const proximity = 60; // (check console.log distance to view proximity to secret)
+            const proximity = 50; // (check console.log distance to view proximity to secret)
             const dx = currentSprite.x - (secret.x + secret.width / 2);
             const dy = currentSprite.y - (secret.y + secret.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -393,17 +401,17 @@ const GameCanvas = () => {
         }
 
         function isNearComputer() {
-            const proximity = 70; // (check console.log distance to view proximity to computer)
+            const proximity = 50; // (check console.log distance to view proximity to computer)
             const dx = currentSprite.x - (computer.x + computer.width / 2);
             const dy = currentSprite.y - (computer.y + computer.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
-            console.log("Distance from Users:" + distance);
+            console.log("Distance from Computer:" + distance);
 
             return distance < proximity;
         }
 
         function isNearCellphone() {
-            const proximity = 70; // (check console.log distance to view proximity to cellphone)
+            const proximity = 60; // (check console.log distance to view proximity to cellphone)
             const dx = currentSprite.x - (cellphone.x + cellphone.width / 2);
             const dy = currentSprite.y - (cellphone.y + cellphone.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -413,11 +421,21 @@ const GameCanvas = () => {
         }
 
         function isNearMusic() {
-            const proximity = 70; // (check console.log distance to view proximity to music)
+            const proximity = 50; // (check console.log distance to view proximity to music)
             const dx = currentSprite.x - (music.x + music.width / 2);
             const dy = currentSprite.y - (music.y + music.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
             console.log("Distance from Music:" + distance);
+
+            return distance < proximity;
+        }
+
+        function isNearPencil() {
+            const proximity = 50; // (check console.log distance to view proximity to pencil)
+            const dx = currentSprite.x - (pencil.x + pencil.width / 2);
+            const dy = currentSprite.y - (pencil.y + pencil.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            console.log("Distance from Pencil:" + distance);
 
             return distance < proximity;
         }
@@ -440,7 +458,7 @@ const GameCanvas = () => {
             // add.on
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 500, 500, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 650, 500, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
         
@@ -676,6 +694,172 @@ const GameCanvas = () => {
                     // '/api/users/:id'
                     modalText.text = `User Details:\n\nName: ${data.firstname} ${data.lastname}\nStage: ${data.stage}`;
                 
+                } catch (error) {
+                    console.error('Error:', error);
+                    modalText.text = 'Error: ' + error.message;
+                }
+            }
+
+            // click to close
+            modal.interactive = true;
+            modal.buttonMode = true;
+            modal.on('pointerdown', () => {
+                app.stage.removeChild(bg);
+                app.stage.removeChild(modal);
+                document.body.removeChild(htmlInput)
+            });
+
+            htmlInput.setAttribute('aria-label', 'Enter User ID');
+        
+            app.stage.addChild(modal);
+
+        }
+
+        async function createAddGoalModal(userid) {
+
+            console.log('Waiting for user input...');
+
+            // (add user) create the background
+            let bg = new PIXI.Graphics();
+            bg.beginFill(0x000000, 0.5);
+            bg.drawRect(0, 0, app.screen.width, app.screen.height);
+            bg.endFill();
+            app.stage.addChild(bg);
+
+            // (add user) create a modal container
+            let modal = new PIXI.Container();
+            modal.x = app.screen.width / 4;
+            modal.y = app.screen.height / 4;
+
+            // (add user) add the modal bg
+            let modalBg = new PIXI.Graphics();
+            modalBg.beginFill(0xFFFFFF); // white bg
+            modalBg.drawRoundedRect(0, 0, 400, 600, 16); // might be too big
+            modalBg.endFill();
+            modal.addChild(modalBg);
+
+            // get button
+            let button = new PIXI.Graphics();
+            button.beginFill(0x4CAF50);
+            button.drawRoundedRect(0, 0, 200, 40, 5);
+            button.endFill();
+            button.x = 100;
+            button.y = 200;
+            button.cursor = 'pointer';
+            modal.addChild(button);
+
+            // adjusts the height of the input box
+            let canvasBounds = app.view.getBoundingClientRect();
+            let inputX = canvasBounds.left + modal.x + button.x;
+            let inputY = canvasBounds.top + modal.y + button.y - 25;
+
+            let htmlInput = document.createElement('input');
+            htmlInput.type = 'text';
+            htmlInput.style.position = 'absolute';
+            htmlInput.style.top = `${inputY}px`;
+            htmlInput.style.left = `${inputX}px`;
+            htmlInput.style.width = '200px';
+            document.body.appendChild(htmlInput);
+
+            // focus the input
+            htmlInput.focus();
+
+            // cleaning up enter key
+            htmlInput.addEventListener('keydown', async (event) => {
+                if (event.key === 'Enter') {
+                    const goal = goalInput.value.trim();
+                    const days = parseInt(daysInput.value.trim());
+                    const complete = completeInput.checked;
+                    const userId = parseInt(userIdInput.value.trim());
+        
+                    if (goal && !isNaN(days) && !isNaN(userId)) {
+                        modalText.text = "Adding goal...";
+                        await addGoal({ goals: goal, days, complete, userId });
+                    }
+                }
+            });
+
+            // button text
+            let buttonText = new PIXI.Text('Press Enter to search!', {
+                fontFamily: 'Arial',
+                fontSize: 16,
+                fill: '#FFFFFF',
+                align: 'center' 
+            });
+            
+            // calculate the position to center the text on the button
+            buttonText.anchor.set(0.5, 0.5);
+            buttonText.x = button.x + (button.width / 2);
+            buttonText.y = button.y + (button.height / 2);
+            
+            modal.addChild(buttonText);
+
+            //input fields for adding a goal
+            let goalInput = document.createElement('input');
+            goalInput.type = 'text';
+            goalInput.placeholder = 'Goal';
+            goalInput.style.position = 'absolute';
+            goalInput.style.top = `${inputY - 60}px`; // Adjust position
+            goalInput.style.left = `${inputX}px`;
+            goalInput.style.width = '200px';
+            document.body.appendChild(goalInput);
+
+            let daysInput = document.createElement('input');
+            daysInput.type = 'number';
+            daysInput.placeholder = 'Days';
+            daysInput.style.position = 'absolute';
+            daysInput.style.top = `${inputY - 30}px`; // Adjust position
+            daysInput.style.left = `${inputX}px`;
+            daysInput.style.width = '200px';
+            document.body.appendChild(daysInput);
+
+            let completeInput = document.createElement('input');
+            completeInput.type = 'checkbox';
+            completeInput.style.position = 'absolute';
+            completeInput.style.top = `${inputY}px`; // Adjust position
+            completeInput.style.left = `${inputX}px`;
+            document.body.appendChild(completeInput);
+
+            let userIdInput = document.createElement('input');
+            userIdInput.type = 'number';
+            userIdInput.placeholder = 'User ID';
+            userIdInput.style.position = 'absolute';
+            userIdInput.style.top = `${inputY + 30}px`; // Adjust position
+            userIdInput.style.left = `${inputX}px`;
+            userIdInput.style.width = '200px';
+            document.body.appendChild(userIdInput);
+
+            //add the modal text
+            let textStyle = new PIXI.TextStyle({
+                fontFamily: 'Arial',
+                fontSize: 24,
+                fill: '#000000',
+                wordWrap: true,
+                wordWrapWidth: 600,
+            });
+        
+            let modalText = new PIXI.Text('Enter New Goal and press Enter', textStyle);
+            modalText.x = 20;
+            modalText.y = 20;
+            modal.addChild(modalText);
+
+            async function addGoal(goalData) {
+                try {
+                    let url = '/api/goals';
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(goalData)
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error(`HTTP Error: ${response.status}`);
+                    }
+        
+                    const data = await response.json();
+                    modalText.text = `Goal Added: ${data.goals}`;
                 } catch (error) {
                     console.error('Error:', error);
                     modalText.text = 'Error: ' + error.message;
