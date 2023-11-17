@@ -13,10 +13,14 @@ const pool = new Pool({
   }
 });
 
+
+
 // GET one user by ID
 app.get('/api/users/:id', async (req, res) => {
   const userid = parseInt(req.params.id);
   
+  res.send(`You have requested user ${userid}`)
+
   // Validate that userId is a number
   if (isNaN(userid)) {
     return res.status(400).send('Invalid user ID');
@@ -25,15 +29,8 @@ app.get('/api/users/:id', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [userid]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).send('User not found');
-    }
-
     res.json(result.rows[0]);
   } catch (err) {
-    const error = new Error(response.statusText);
-    error.response = response;
-    error.data = data;
     console.error('Error fetching user:', err);
     res.status(500).send('Server error');
   }
