@@ -383,7 +383,7 @@ const GameCanvas = () => {
         }
 
         function isNearSecret() {
-            const proximity = 90; // (check console.log distance to view proximity to secret)
+            const proximity = 60; // (check console.log distance to view proximity to secret)
             const dx = currentSprite.x - (secret.x + secret.width / 2);
             const dy = currentSprite.y - (secret.y + secret.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
