@@ -212,8 +212,8 @@ const GameCanvas = () => {
 
         //pencil
         let pencil = PIXI.Sprite.from('pencil.png');
-        pencil.x = app.screen.width / 2.2;
-        pencil.y = app.screen.height / 3.5;
+        pencil.x = app.screen.width / 2.15;
+        pencil.y = app.screen.height / 3.42;
         app.stage.addChild(pencil);
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
@@ -385,11 +385,11 @@ const GameCanvas = () => {
         window.addEventListener('keydown', onKeyDown);
 
         function isNearNotepad() {
-            const proximity = 50; // (check console.log distance to view proximity to whiteboard)
+            const proximity = 45; // (check console.log distance to view proximity to notepad)
             const dx = currentSprite.x - (notepad.x + notepad.width / 2);
             const dy = currentSprite.y - (notepad.y + notepad.height / 2);
             const distance = Math.sqrt(dx * dx + dy * dy);
-            console.log("Distance from Notebook:" + distance);
+            console.log("Distance from Notepad:" + distance);
 
             return distance < proximity;
         }
@@ -719,7 +719,7 @@ const GameCanvas = () => {
 
         }
 
-        async function createAddGoalModal(userid) {
+        async function createAddGoalModal() {
 
             console.log('Waiting for user input...');
 
@@ -842,7 +842,7 @@ const GameCanvas = () => {
                 wordWrapWidth: 600,
             });
         
-            let modalText = new PIXI.Text('Enter New Goal and press Enter', textStyle);
+            let modalText = new PIXI.Text('Add a goal and press Enter!', textStyle);
             modalText.x = 20;
             modalText.y = 20;
             modal.addChild(modalText);
@@ -877,6 +877,10 @@ const GameCanvas = () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
                 document.body.removeChild(htmlInput)
+                document.body.removeChild(goalInput);
+                document.body.removeChild(daysInput);
+                document.body.removeChild(completeInput);
+                document.body.removeChild(userIdInput);
             });
 
             htmlInput.setAttribute('aria-label', 'Enter User ID');
