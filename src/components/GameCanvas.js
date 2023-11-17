@@ -301,7 +301,7 @@ const GameCanvas = () => {
                     } else if (isNearComputer()) {
                         createUsersModal();
                     } else if (isNearCellphone()) {
-                        createGetUserModal('1');
+                        createGetUserModal(1);
                     }
                     break;
 
