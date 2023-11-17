@@ -518,41 +518,53 @@ const GameCanvas = () => {
             modalBg.endFill();
             modal.addChild(modalBg);
 
+            // get button
+            let button = new PIXI.Graphics();
+            button.beginFill(0x4CAF50);
+            button.drawRoundedRect(0, 0, 200, 40, 5);
+            button.endFill();
+            button.x = 100;
+            button.y = 100;
+            button.cursor = 'pointer';
+            modal.addChild(button);
+
+            // adjusts the height of the input box
+            let canvasBounds = app.view.getBoundingClientRect();
+            let inputX = canvasBounds.left + modal.x + button.x;
+            let inputY = canvasBounds.top + modal.y + button.y - 25;
+
             let htmlInput = document.createElement('input');
             htmlInput.type = 'text';
             htmlInput.style.position = 'absolute';
-            htmlInput.style.top = `${modal.y + 400}px`; // Adjust based on your modal's position
-            htmlInput.style.left = `${modal.x + 500}px`; // Adjust based on your modal's position
+            htmlInput.style.top = `${inputY}px`;
+            htmlInput.style.left = `${inputX}px`;
             htmlInput.style.width = '200px';
             document.body.appendChild(htmlInput);
 
             // focus the input
             htmlInput.focus();
 
-            // Event listener for Enter key
+            // cleaning up enter key
             htmlInput.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
                     let userid = htmlInput.value.trim();
+                    modalText.text = "Searching...";
                     await loadGetUser(modalText, userid);
                 }
             });
-            
-            //create a get button
-            let button = new PIXI.Graphics();
-            button.beginFill(0x00FF00); // green button
-            button.drawRoundedRect(0, 0, 400, 200, 5); // adjust size as needed
-            button.endFill();
-            button.x = 2;
-            button.y = 100;
-            modal.addChild(button);
 
-            // Button text
-            let buttonText = new PIXI.Text('You are doing great! Now press Enter to search for a user by ID!', {
+            // button text
+            let buttonText = new PIXI.Text('Press Enter to search!', {
                 fontFamily: 'Arial',
                 fontSize: 16,
-                fill: '#FFFFFF' // white text
+                fill: '#FFFFFF',
+                align: 'center' 
             });
-            buttonText.x = button.x - 20; 
+            buttonText.x = button.x + 10;
+            buttonText.y = button.y + 10; 
+            modal.addChild(buttonText);
+
+            buttonText.x = button.x + 5 ; 
             buttonText.y = button.y + 5;
             modal.addChild(buttonText);
 
@@ -574,26 +586,23 @@ const GameCanvas = () => {
             await loadGetUser(modalText, userid);
 
             async function loadGetUser(modalText, userid) {
-                if (!userid || isNaN(Number(userid))) {
-                    modalText.text = 'Dog\'s iPhone';
-                    return;
-                }
+                modalText.text = "Dog's iPhone";
 
                 try {
                     let url = `/api/users/${userid}`;
                     const response = await fetch(url);
             
-                    console.log('Requesting:', url); // Log the URL being requested
-                    console.log('Response Status:', response.status); // Log the response status
+                    console.log('Requesting:', url);
+                    console.log('Response Status:', response.status);
             
                     if (!response.ok) {
                         throw new Error(`HTTP Error: ${response.status}`);
                     }
             
                     const data = await response.json();
-                    console.log('Response Data:', data); // Log the received data
+                    console.log('Response Data:', data);
             
-                    // Handle the response as an object (for '/api/users/:id')
+                    // '/api/users/:id'
                     modalText.text = `User Details:\n\nName: ${data.firstname} ${data.lastname}\nStage: ${data.stage}`;
                 
                 } catch (error) {
@@ -610,6 +619,8 @@ const GameCanvas = () => {
                 app.stage.removeChild(modal);
                 document.body.removeChild(htmlInput)
             });
+
+            htmlInput.setAttribute('aria-label', 'Enter User ID');
         
             app.stage.addChild(modal);
 
