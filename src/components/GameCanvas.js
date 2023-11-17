@@ -556,15 +556,6 @@ const GameCanvas = () => {
             buttonText.y = button.y + 5;
             modal.addChild(buttonText);
 
-            // Button interactivity
-            button.interactive = true;
-            button.buttonMode = true;
-            button.on('pointerdown', async () => {
-                // Here you pass the input from the input field to the loadGetUser function
-                let userId = htmlInput.value.trim(); // Assuming the text in inputText is the user ID
-                await loadGetUser(modalText, userId);
-            });
-        
             //add the modal text
             let textStyle = new PIXI.TextStyle({
                 fontFamily: 'Arial',
