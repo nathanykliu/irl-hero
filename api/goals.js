@@ -5,6 +5,7 @@ const app = express();
 
 //cors error fix
 app.use(cors());
+app.use(express.json());
 
 // postgresql connection
 const pool = new Pool({
@@ -29,7 +30,7 @@ app.post('/api/goals', async (req, res) => {
     const { goals, days, complete, userId } = req.body;
 
     //insert the new goal into the database
-    const insertQuery = 'INSERT INTO goals(goals, days, complete, user_id) VALUES($1, $2, $3, $4) RETURNING *;';
+    const insertQuery = 'INSERT INTO goals (goals, days, complete, user_id) VALUES($1, $2, $3, $4) RETURNING *;';
     const values = [goals, days, complete, userId];
     const { rows } = await pool.query(insertQuery, values);
 
