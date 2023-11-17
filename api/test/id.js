@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 // GET one user by ID
-app.get('/api/user/id', async (req, res) => {
+app.get('/api/test/id', async (req, res) => {
   const userid = 1
   
   // res.send(`You have requested user ${userid}`)
