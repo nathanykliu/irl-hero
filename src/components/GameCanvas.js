@@ -723,26 +723,26 @@ const GameCanvas = () => {
 
             console.log('Waiting for user input...');
 
-            // (add user) create the background
+            // (add goal) create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
             bg.drawRect(0, 0, app.screen.width, app.screen.height);
             bg.endFill();
             app.stage.addChild(bg);
 
-            // (add user) create a modal container
+            // (add goal) create a modal container
             let modal = new PIXI.Container();
             modal.x = app.screen.width / 4;
             modal.y = app.screen.height / 4;
 
-            // (add user) add the modal bg
+            // (add goal) add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
             modalBg.drawRoundedRect(0, 0, 400, 600, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
 
-            // get button
+            // (add goal) button
             let button = new PIXI.Graphics();
             button.beginFill(0x4CAF50);
             button.drawRoundedRect(0, 0, 200, 40, 5);
@@ -755,21 +755,10 @@ const GameCanvas = () => {
             // adjusts the height of the input box
             let canvasBounds = app.view.getBoundingClientRect();
             let inputX = canvasBounds.left + modal.x + button.x;
-            let inputY = canvasBounds.top + modal.y + button.y - 25;
-
-            let htmlInput = document.createElement('input');
-            htmlInput.type = 'text';
-            htmlInput.style.position = 'absolute';
-            htmlInput.style.top = `${inputY}px`;
-            htmlInput.style.left = `${inputX}px`;
-            htmlInput.style.width = '200px';
-            document.body.appendChild(htmlInput);
-
-            // focus the input
-            htmlInput.focus();
+            let inputY = canvasBounds.top + modal.y + button.y - 60;
 
             // cleaning up enter key
-            htmlInput.addEventListener('keydown', async (event) => {
+            window.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
                     const goal = goalInput.value.trim();
                     const days = parseInt(daysInput.value.trim());
@@ -809,7 +798,7 @@ const GameCanvas = () => {
 
             let daysInput = document.createElement('input');
             daysInput.type = 'number';
-            daysInput.placeholder = 'Days';
+            daysInput.placeholder = 'Days to Complete';
             daysInput.style.position = 'absolute';
             daysInput.style.top = `${inputY - 30}px`; // Adjust position
             daysInput.style.left = `${inputX}px`;
@@ -862,24 +851,42 @@ const GameCanvas = () => {
                 }
             }
 
+
+
+            goalInput.focus();
+
             // click to close
             modal.interactive = true;
             modal.buttonMode = true;
             modal.on('pointerdown', () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
-                document.body.removeChild(htmlInput)
                 document.body.removeChild(goalInput);
                 document.body.removeChild(daysInput);
-
                 document.body.removeChild(userIdInput);
             });
 
-            htmlInput.setAttribute('aria-label', 'Enter User ID');
-        
             app.stage.addChild(modal);
 
+            function updateInputPositions() {
+                let canvasBounds = app.view.getBoundingClientRect();
+                let inputX = canvasBounds.left + modal.x + button.x;
+                let inputY = canvasBounds.top + modal.y + button.y - 60;
+            
+                goalInput.style.top = `${inputY - 60}px`;
+                goalInput.style.left = `${inputX}px`;
+                daysInput.style.top = `${inputY - 30}px`;
+                daysInput.style.left = `${inputX}px`;
+                userIdInput.style.top = `${inputY + 30}px`;
+                userIdInput.style.left = `${inputX}px`;
+            }
+    
+            updateInputPositions();
+            window.addEventListener('resize', updateInputPositions);
+
         }
+
+        
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);
