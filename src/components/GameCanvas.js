@@ -794,7 +794,7 @@ const GameCanvas = () => {
             });
 
             // button text
-            let buttonText = new PIXI.Text('Press Enter to search!', {
+            let buttonText = new PIXI.Text('Press Enter to add goal!', {
                 fontFamily: 'Arial',
                 fontSize: 16,
                 fill: '#FFFFFF',
@@ -831,7 +831,7 @@ const GameCanvas = () => {
             userIdInput.type = 'number';
             userIdInput.placeholder = 'User ID';
             userIdInput.style.position = 'absolute';
-            userIdInput.style.top = `${inputY + 30}px`; // Adjust position
+            userIdInput.style.top = `${inputY + 0}px`; // Adjust position
             userIdInput.style.left = `${inputX}px`;
             userIdInput.style.width = '200px';
             document.body.appendChild(userIdInput);
@@ -900,7 +900,7 @@ const GameCanvas = () => {
                 goalInput.style.left = `${inputX}px`;
                 daysInput.style.top = `${inputY - 30}px`;
                 daysInput.style.left = `${inputX}px`;
-                userIdInput.style.top = `${inputY + 30}px`;
+                userIdInput.style.top = `${inputY + 0}px`;
                 userIdInput.style.left = `${inputX}px`;
             }
     
