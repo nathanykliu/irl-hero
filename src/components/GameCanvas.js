@@ -477,7 +477,7 @@ const GameCanvas = () => {
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
-                wordWrapWidth: 600,
+                wordWrapWidth: 650,
             });
         
             let modalText = new PIXI.Text('Loading goals...', textStyle);
@@ -760,7 +760,7 @@ const GameCanvas = () => {
             // (add goal) add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 400, 600, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 400, 700, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
 

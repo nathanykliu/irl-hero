@@ -12,13 +12,13 @@
 -- );
 
 -- create teh goals table
--- CREATE TABLE goals (
---     id SERIAL PRIMARY KEY,
---     goals VARCHAR(255),
---     days INTEGER,
---     complete BOOLEAN,
---     user_id VARCHAR(255)
--- );
+CREATE TABLE goals (
+    id SERIAL PRIMARY KEY,
+    goals VARCHAR(255),
+    days INTEGER,
+    complete BOOLEAN,
+    user_id VARCHAR(255)
+);
 
 -- populate the table
 -- INSERT INTO users (lastname, firstname, stage) VALUES
@@ -36,7 +36,6 @@
 
 -- populate goals
 -- INSERT INTO goals (Goals, Days, Complete, User_id) VALUES
---     ('New Example Goal', 30, false, 1),
 --     ('Complete MVP', 30, false, 1),
 --     ('Eat lots of dog food', 60, false, 2),
 --     ('Run a half marathon', 120, false, 3),
