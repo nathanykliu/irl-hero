@@ -9,6 +9,7 @@ const GameCanvas = () => {
         const stage1audio = new Audio('stage1.mp3');
         const stage1Secret = new Audio('stage1secret.mp3');
         let isMusicPlaying = false;
+        let isModalOpen = false;
 
         // on mount, create a Pixi.js app and append the canvas to the div
         let app = new PIXI.Application({
@@ -447,6 +448,10 @@ const GameCanvas = () => {
         // notepad modal
         async function createGoalsModal() {
 
+            //prevents multiple modals from opening
+            if (isModalOpen) return;
+            isModalOpen = true;
+
             // create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
@@ -506,6 +511,7 @@ const GameCanvas = () => {
             modal.on('pointerdown', () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
+                isModalOpen = false;
             });
         
             app.stage.addChild(modal);
@@ -514,6 +520,11 @@ const GameCanvas = () => {
         
         // computer modal
         async function createUsersModal() {
+
+            //prevents multiple modals from opening
+            if (isModalOpen) return;
+            isModalOpen = true;
+
             // create the background
             let bg = new PIXI.Graphics();
             bg.beginFill(0x000000, 0.5);
@@ -556,6 +567,7 @@ const GameCanvas = () => {
             modal.on('pointerdown', () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
+                isModalOpen = false;
             });
         
             app.stage.addChild(modal);
@@ -581,6 +593,11 @@ const GameCanvas = () => {
         
         // cell phone modal
         async function createGetUserModal(userid) {
+
+            //prevents multiple modals from opening
+            if (isModalOpen) return;
+            isModalOpen = true;
+
 
             console.log('Waiting for user input...');
 
@@ -711,6 +728,7 @@ const GameCanvas = () => {
                 app.stage.removeChild(bg);
                 app.stage.removeChild(modal);
                 document.body.removeChild(htmlInput)
+                isModalOpen = false;
             });
 
             htmlInput.setAttribute('aria-label', 'Enter User ID');
@@ -720,6 +738,10 @@ const GameCanvas = () => {
         }
 
         async function createAddGoalModal() {
+
+            //prevents multiple modals from opening
+            if (isModalOpen) return;
+            isModalOpen = true;
 
             console.log('Waiting for user input...');
 
@@ -864,6 +886,7 @@ const GameCanvas = () => {
                 document.body.removeChild(goalInput);
                 document.body.removeChild(daysInput);
                 document.body.removeChild(userIdInput);
+                isModalOpen = false;
             });
 
             app.stage.addChild(modal);
