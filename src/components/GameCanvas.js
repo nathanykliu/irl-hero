@@ -1059,12 +1059,15 @@ const GameCanvas = () => {
                     }
         
                     const data = await response.json();
-                    modalText.text = `User Added: ${data.users}`;
+                    modalText.text = `User Added: ${data.firstname} ${data.lastname}`;
+                    console.log('Response Data:', data);
+
                 } catch (error) {
                     console.error('Error:', error);
                     modalText.text = 'Error: ' + error.message;
                 }
             }
+
             setTimeout(() => {
                 firstNameInput.focus();
             }, 0);
