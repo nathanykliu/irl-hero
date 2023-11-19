@@ -971,7 +971,7 @@ const GameCanvas = () => {
             window.addEventListener('keydown', async (event) => {
                 if (event.key === 'Enter') {
                     const firstname = firstNameInput.value.trim();
-                    const lastname = parseInt(lastNameInput.value.trim());
+                    const lastname = lastNameInput.value.trim();
                     const stage = parseInt(stageInput.value.trim());
         
                     //input validation
