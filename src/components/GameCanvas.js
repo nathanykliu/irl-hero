@@ -660,8 +660,10 @@ const GameCanvas = () => {
             htmlInput.style.width = '200px';
             document.body.appendChild(htmlInput);
 
-            // focus the input
-            htmlInput.focus();
+            //focus the input with delay
+            setTimeout(() => {
+                htmlInput.focus();
+            }, 0);
 
             // cleaning up enter key
             htmlInput.addEventListener('keydown', async (event) => {
@@ -891,8 +893,11 @@ const GameCanvas = () => {
             }
 
 
-
-            goalInput.focus();
+            //focus the input with delay
+            setTimeout(() => {
+                goalInput.focus();;
+            }, 0);
+         
 
             // click to close
             modal.interactive = true;
@@ -1060,8 +1065,9 @@ const GameCanvas = () => {
                     modalText.text = 'Error: ' + error.message;
                 }
             }
-
-            firstNameInput.focus();
+            setTimeout(() => {
+                firstNameInput.focus();
+            }, 0);
 
             // click to close
             modal.interactive = true;
@@ -1094,25 +1100,6 @@ const GameCanvas = () => {
             window.addEventListener('resize', updateInputPositions);
 
         }
-
-        window.addEventListener('keydown', async (event) => {
-            if (event.key === ' ' && event.target.tagName !== 'INPUT' && !isModalOpen) {
-                event.preventDefault();
-        
-                if (isNearMouse()) {
-                    await createAddUserModal();
-                } else if (isNearPencil()) {
-                    await createAddGoalModal();
-                } else if (isNearCellphone()) {
-                    await createGetUserModal();
-                } else if (isNearComputer()) {
-                    await createUsersModal();
-                } else if (isNearNotepad()) {
-                    await createGoalsModal();
-                }
-            }
-        });
-        
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);
