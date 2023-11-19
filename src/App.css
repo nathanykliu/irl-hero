@@ -78,4 +78,26 @@ input {
   padding: 0;
 }
 
+#infoBox {
+  background-color: var(--infoBox-bg-color);
+  position: fixed;   
+  bottom: 10px;
+  right: 10px;
+  margin: 5px;
+  height: 60px;
+  width: 150px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #000;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-size: 11px;
+  color: var(--infoBox-text-color);
+}
+
+#infoBox h3 {
+  margin-top: 0;
+  margin-inline: 0; 
+}
 

@@ -36,5 +36,19 @@ const App = () => {
   );
 };
 
+//info box at bottom right
+function createInfoBox() {
+  const infoBox = document.createElement('div');
+  infoBox.id = 'infoBox';
+  infoBox.innerHTML = `
+      <h3>Created by Nathan Liu</h3>
+      <p><a target = "_blank" href="https://github.com/nateykliu/irl-hero">View this project in Github</a></p>
+      <p><a target = "_blank" href ="https://github.com/nateykliu/irl-hero/issues/new">Report a bug</a></p>
+  `;
+  document.body.appendChild(infoBox);
+}
+
+createInfoBox();
+
 export default App;
 
