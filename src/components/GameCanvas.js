@@ -1007,7 +1007,7 @@ const GameCanvas = () => {
             document.body.appendChild(firstNameInput);
 
             let lastNameInput = document.createElement('input');
-            lastNameInput.type = 'number';
+            lastNameInput.type = 'text';
             lastNameInput.placeholder = 'Last Name';
             lastNameInput.style.position = 'absolute';
             lastNameInput.style.top = `${inputY - 30}px`;
