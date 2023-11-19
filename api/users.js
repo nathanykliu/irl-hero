@@ -7,6 +7,7 @@ const app = express();
 
 //cors error fix
 app.use(cors());
+app.use(express.json());
 
 // postgresql connection
 const pool = new Pool({
