@@ -161,7 +161,7 @@ const GameCanvas = () => {
 
         }
 
-        //static sprites (no idle animation)
+        //static sprites (eventually idle animation)
         let downSprite = PIXI.Sprite.from('downsprite.png');
         let upSprite = PIXI.Sprite.from('upsprite.png');
         let leftSprite = PIXI.Sprite.from('leftsprite.png');
@@ -217,6 +217,7 @@ const GameCanvas = () => {
         pencil.y = app.screen.height / 3.42;
         app.stage.addChild(pencil);
 
+        //mouse
         let mouse = PIXI.Sprite.from('mouse.png');
         mouse.x = app.screen.width / 3.4;
         mouse.y = app.screen.height / 2.4;
@@ -224,6 +225,7 @@ const GameCanvas = () => {
 
         app.stage.addChild(downSprite); // (!!!load orders matters in pixi.js)
 
+        //changing sprites
         function changeSprite(newSprite) {
             if (currentSprite !== newSprite) {
 
@@ -1002,6 +1004,8 @@ const GameCanvas = () => {
             modal.addChild(buttonText);
 
             //input fields for adding a user
+            
+            //(add user) first name input
             let firstNameInput = document.createElement('input');
             firstNameInput.type = 'text';
             firstNameInput.placeholder = 'First Name';
@@ -1011,6 +1015,7 @@ const GameCanvas = () => {
             firstNameInput.style.width = '200px';
             document.body.appendChild(firstNameInput);
 
+            //(add user) last name input
             let lastNameInput = document.createElement('input');
             lastNameInput.type = 'text';
             lastNameInput.placeholder = 'Last Name';
@@ -1020,6 +1025,7 @@ const GameCanvas = () => {
             lastNameInput.style.width = '200px';
             document.body.appendChild(lastNameInput);
 
+            //(add user) stage input
             let stageInput = document.createElement('input');
             stageInput.type = 'number';
             stageInput.placeholder = 'Stage';
@@ -1043,6 +1049,7 @@ const GameCanvas = () => {
             modalText.y = 20;
             modal.addChild(modalText);
 
+            //post request to add user
             async function addUser(userData) {
                 try {
                     let url = '/api/users';
