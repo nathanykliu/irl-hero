@@ -1094,6 +1094,24 @@ const GameCanvas = () => {
             window.addEventListener('resize', updateInputPositions);
 
         }
+
+        window.addEventListener('keydown', async (event) => {
+            if (event.key === ' ' && event.target.tagName !== 'INPUT' && !isModalOpen) {
+                event.preventDefault();
+        
+                if (isNearMouse()) {
+                    await createAddUserModal();
+                } else if (isNearPencil()) {
+                    await createAddGoalModal();
+                } else if (isNearCellphone()) {
+                    await createGetUserModal();
+                } else if (isNearComputer()) {
+                    await createUsersModal();
+                } else if (isNearNotepad()) {
+                    await createGoalsModal();
+                }
+            }
+        });
         
 
         return () => {

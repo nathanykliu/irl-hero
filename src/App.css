@@ -5,6 +5,17 @@
   height: 100vh;
   background-color: #f0f0f0; 
   overflow-x: hidden;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 .game-canvas-container { 
@@ -60,6 +71,7 @@
   padding: 20px;
   border-radius: 5px;
   text-align: center;
+  
 }
 
 .dialog {
@@ -84,16 +96,16 @@ input {
   bottom: 10px;
   right: 10px;
   margin: 5px;
-  height: 60px;
-  width: 150px;
+  height: 75px;
+  width: 160px;
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #000;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  font-size: 11px;
-  color: var(--infoBox-text-color);
+  font-size: 12px;
+  font-family: 'Pixelify Sans', sans-serif;
 }
 
 #infoBox h3 {
