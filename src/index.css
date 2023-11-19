@@ -22,6 +22,8 @@ code {
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4);
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 .intromodal-content {
   background-color: #fefefe;
@@ -32,6 +34,8 @@ code {
   border-radius: 10px;
   text-align: center;
   font-size: 20px;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 .intromodal-close {
@@ -49,6 +53,8 @@ code {
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 5px;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 .intromodal-close:hover {

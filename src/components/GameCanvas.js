@@ -19,7 +19,7 @@ const GameCanvas = () => {
         });
 
         pixiContainer.current.appendChild(app.view);
-        
+
         //background
         let background = PIXI.Sprite.from('stage1background.png');
         background.anchor.set(0, 0);
@@ -490,7 +490,7 @@ const GameCanvas = () => {
         
             // add the modal text
             let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
@@ -563,7 +563,7 @@ const GameCanvas = () => {
         
             // add the modal text
             let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
@@ -678,7 +678,7 @@ const GameCanvas = () => {
 
             // button text
             let buttonText = new PIXI.Text('Press Enter to search!', {
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 16,
                 fill: '#FFFFFF',
                 align: 'center' 
@@ -693,7 +693,7 @@ const GameCanvas = () => {
 
             //add the modal text
             let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
@@ -779,7 +779,7 @@ const GameCanvas = () => {
             // (add goal) add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 400, 700, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 400, 300, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
 
@@ -814,7 +814,7 @@ const GameCanvas = () => {
 
             // button text
             let buttonText = new PIXI.Text('Press Enter to add goal!', {
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 16,
                 fill: '#FFFFFF',
                 align: 'center' 
@@ -857,7 +857,7 @@ const GameCanvas = () => {
 
             //add the modal text
             let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,
@@ -953,7 +953,7 @@ const GameCanvas = () => {
             // (add user) add the modal bg
             let modalBg = new PIXI.Graphics();
             modalBg.beginFill(0xFFFFFF); // white bg
-            modalBg.drawRoundedRect(0, 0, 400, 700, 16); // might be too big
+            modalBg.drawRoundedRect(0, 0, 400, 300, 16); // might be too big
             modalBg.endFill();
             modal.addChild(modalBg);
 
@@ -988,7 +988,7 @@ const GameCanvas = () => {
 
             // button text
             let buttonText = new PIXI.Text('Press Enter to add user!', {
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 16,
                 fill: '#FFFFFF',
                 align: 'center' 
@@ -1031,7 +1031,7 @@ const GameCanvas = () => {
 
             //add the modal text
             let textStyle = new PIXI.TextStyle({
-                fontFamily: 'Arial',
+                fontFamily: 'Pixelify Sans',
                 fontSize: 24,
                 fill: '#000000',
                 wordWrap: true,

@@ -1,12 +1,12 @@
 .App {
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f0f0f0; 
   overflow-x: hidden;
-  font-family: 'Pixelify Sans', sans-serif,
-    monospace;
 }
 
 body {
@@ -21,11 +21,15 @@ body {
 .game-canvas-container { 
   align-items: center;
   box-sizing: border-box;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+    font-family: 'Pixelify Sans', sans-serif,
+    monospace;
   }
 }
 
@@ -38,10 +42,14 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 .App-link {
   color: #61dafb;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 @keyframes App-logo-spin {
@@ -64,6 +72,8 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 100;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 .modal-content {
@@ -71,7 +81,8 @@ body {
   padding: 20px;
   border-radius: 5px;
   text-align: center;
-  
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 .dialog {
@@ -83,11 +94,15 @@ body {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #000;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 input {
   margin: 0;
   padding: 0;
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
 #infoBox {
@@ -111,5 +126,7 @@ input {
 #infoBox h3 {
   margin-top: 0;
   margin-inline: 0; 
+  font-family: 'Pixelify Sans', sans-serif,
+    monospace;
 }
 
