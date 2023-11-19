@@ -26,4 +26,22 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
+app.post('/api/users', async (req, res) => {
+  try {
+    const { lastname, firstname, stage } = req.body;
+
+    //insert the new goal into the database
+    const insertQuery = 'INSERT INTO users (lastname, firstname, stage) VALUES($1, $2, $3) RETURNING *;';
+    const values = [lastname, firstname, stage];
+    const { rows } = await pool.query(insertQuery, values);
+
+    //send back new goal
+    res.status(201).json(rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+
+});
+
 module.exports = app;
