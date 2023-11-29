@@ -1074,7 +1074,7 @@ const GameCanvas = () => {
                     modalText.text = 'Error: ' + error.message;
                 }
             }
-
+            
             setTimeout(() => {
                 firstNameInput.focus();
             }, 0);
